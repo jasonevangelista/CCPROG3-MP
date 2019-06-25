@@ -9,7 +9,7 @@ public class Driver {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int seqNum;
+        int seqNum = 000;
         String name;
         int dRegion;
         String sRegion;
@@ -56,7 +56,7 @@ public class Driver {
         }
         
         // apply insurance or not
-        System.out.print("Do you want to insure the parcel for a small fee?");
+        System.out.println("Do you want to insure the parcel for a small fee?");
         System.out.println("[1] YES");
         System.out.println("[2] NO");
         dInsurance = sc.nextInt();
@@ -72,7 +72,7 @@ public class Driver {
 
 
         /* program determines the type of parcels that can be used */
-        Parcel parcel = new Parcel(name, sRegion, numItem, listItem, seqNum, bInsurance);
+        // Parcel parcel = new Parcel(name, sRegion, numItem, listItem, seqNum, bInsurance);
 
         /* user chooses the type of parcel he wants */
 
