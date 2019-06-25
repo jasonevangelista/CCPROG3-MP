@@ -59,12 +59,16 @@ public class Driver {
         System.out.print("Do you want to insure the parcel for a small fee?");
         System.out.println("[1] YES");
         System.out.println("[2] NO");
+        dInsurance = sc.nextInt();
+        sc.nextLine();
         if(dInsurance == 1)
             bInsurance = true;
         else if(dInsurance == 2)
             bInsurance = false;
-        else
+        else{
+            bInsurance = false;
             System.out.println("error"); // error
+        }
 
 
         /* program determines the type of parcels that can be used */
