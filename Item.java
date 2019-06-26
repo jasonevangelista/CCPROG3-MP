@@ -17,12 +17,11 @@ public class Item {
     }
 
     /**
-        This is the constructor for document-type items.
-        @param type The type of parcel. Either flat or box.
-        @param length The length of the page of the document.
-        @param width The width of the page of the document.
-        @param numPage The number of pages of the document.
-
+    *   This is the constructor for document-type items.
+    *   @param type The type of parcel. Either flat or box.
+    *   @param length The length of the page of the document.
+    *   @param width The width of the page of the document.
+    *   @param numPage The number of pages of the document.
     */
     public Item(String type, double length, double width, int numPage){
         this(type, length, width);
@@ -35,12 +34,12 @@ public class Item {
     }
 
     /**
-        This is the constructor for product-type and irregularly-sized items.
-        @param type The type of parcel. Either flat or box.
-        @param length The length of the product.
-        @param width The width of the product.
-        @param height The height of the product.
-        @param weight The weight of the product.
+    *   This is the constructor for product-type and irregularly-sized items.
+    *   @param type The type of parcel. Either flat or box.
+    *   @param length The length of the product.
+    *   @param width The width of the product.
+    *   @param height The height of the product.
+    *   @param weight The weight of the product.
     */
     public Item(String type, double length, double width, double height, double weight){
         this(type, length, width);
@@ -49,10 +48,10 @@ public class Item {
     }
 
     /**
-        This function is used to compute for the thickness of 
-        document-type item. 25 pages = 1 inch, round up on excess.
-        @param numPage Indicates the number of pages of the document.
-        @return The thickness of the document in inches.
+    *   This function is used to compute for the thickness of 
+    *   document-type item. 25 pages = 1 inch, round up on excess.
+    *   @param numPage Indicates the number of pages of the document.
+    *   @return The thickness of the document in inches.
     */
     public int computeThickness(int numPage){
         int thickness = 0;
@@ -70,10 +69,10 @@ public class Item {
     }
 
     /**
-        This function is used to compute for the weight of 
-        document-type item. 25 pages = 200g, round up on excess.
-        @param numPage Indicates the number of pages of the document.
-        @return The weight of the document in grams.
+    *   This function is used to compute for the weight of 
+    *   document-type item. 25 pages = 200g, round up on excess.
+    *   @param numPage Indicates the number of pages of the document.
+    *   @return The weight of the document in grams.
     */
     public int computeWeight(int numPage){
         int weight = 0;
@@ -91,7 +90,7 @@ public class Item {
     }
 
     /**
-        Getter function for the item type; Flat, Box
+    *   Getter function for the item type; Document, product
     */
     public String getItemType(){
         return type;
