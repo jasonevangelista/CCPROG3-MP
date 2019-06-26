@@ -11,13 +11,20 @@ public class Driver {
 
         int seqNum = 000;
         String name;
-        int dRegion;
-        String sRegion;
+        String region;
         int numItem;
-        int dInsurance;
-        boolean bInsurance;
+        int inputInt;
+        double inputDouble;
+        boolean insurance;
 
-        ArrayList<Item> listItem;
+        ArrayList<Item> listItem = new ArrayList<Item>();
+
+        String itemType;
+        double itemLength;
+        double itemWidth;
+        double itemHeight;
+        double itemWeight;
+        int itemNumPage;
 
         /* input info */
 
@@ -32,16 +39,16 @@ public class Driver {
         System.out.println("[3] Visayas");
         System.out.println("[4] Mindanao");
         System.out.print("Input: ");
-        dRegion = sc.nextInt();
+        inputInt = sc.nextInt();
         sc.nextLine();
-        if(dRegion == 1)
-            sRegion = "Metro Manila";
-        else if(dRegion == 2)
-            sRegion = "Provincial Luzon";
-        else if(dRegion == 3)
-            sRegion = "Visayas";
-        else if(dRegion == 4)
-            sRegion = "Mindanao";
+        if(inputInt == 1)
+            region = "Metro Manila";
+        else if(inputInt == 2)
+            region = "Provincial Luzon";
+        else if(inputInt == 3)
+            region = "Visayas";
+        else if(inputInt == 4)
+            region = "Mindanao";
         else
             System.out.println("error"); // error
 
@@ -52,21 +59,69 @@ public class Driver {
 
         // all the info of each item
         for(int i = 0; i < numItem; i++){
-            //input info of each item
+            System.out.println("PRODUCT #" + (i + 1) );
+
+            // product or document
+            System.out.println("Type of Product:");
+            System.out.println("[1] Document");
+            System.out.println("[2] Product");
+            System.out.print("Input: ");
+            inputInt = sc.nextInt();
+            sc.nextLine();
+
+            // length
+            System.out.print("Enter Length (inches): ");
+            itemLength = sc.nextDouble();
+            sc.nextLine();
+
+            // width
+            System.out.print("Enter Width (inches): ");
+            itemWidth = sc.nextDouble();
+            sc.nextLine();
+            
+            //if docu, ask number of pages
+            if(inputInt == 1){
+                itemType = "document";
+                System.out.print("Enter number of Pages: ");
+                itemNumPage = sc.nextInt();
+                sc.nextLine();
+
+                Item item = new Item(itemType, itemLength, itemWidth, itemNumPage);
+                listItem.add(item);
+            }
+
+            // if product, ask height and weight
+            else if(inputInt == 2){
+                itemType = "product";
+                System.out.print("Enter Height (inches): ");
+                itemHeight = sc.nextDouble();
+                sc.nextLine();
+                System.out.print("Enter Weight (kilo): ");
+                itemWeight = sc.nextDouble();
+                sc.nextLine();
+
+                Item item = new Item(itemType, itemLength, itemWidth, itemHeight, itemWeight);
+                listItem.add(item);
+            }
+
+            else{
+                System.out.println("error");
+            }
+
         }
         
         // apply insurance or not
         System.out.println("Do you want to insure the parcel for a small fee?");
         System.out.println("[1] YES");
         System.out.println("[2] NO");
-        dInsurance = sc.nextInt();
+        inputInt = sc.nextInt();
         sc.nextLine();
-        if(dInsurance == 1)
-            bInsurance = true;
-        else if(dInsurance == 2)
-            bInsurance = false;
+        if(inputInt == 1)
+            insurance = true;
+        else if(inputInt == 2)
+            insurance = false;
         else{
-            bInsurance = false;
+            insurance = false;
             System.out.println("error"); // error
         }
 
