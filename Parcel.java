@@ -18,7 +18,14 @@ public class Parcel {
     private     double          totalVolume = 0;
     private     int             deliveryDays;
     private     boolean         insurance;
+
+    private     static int      FLAT[][] = {{1, 9, 14, 1},{2, 12, 18, 3}};
+                                // format: flat #, length, width, max thickness
+    private     static int      MAX_FLAT_WEIGHT = 3; // in kg 
     
+    private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, {3, 18, 12, 9}, {4, 20, 16, 12}};
+                                // format: box #, length, width, height
+
     /**
      * This constructor takes in the parcel's recipient name, destination region,
      * quantity of items, list of items, sequence number, and insurance status.
@@ -97,6 +104,9 @@ public class Parcel {
             this.insuranceFee = 5 * this.quantity;
     }
 
+    /** 
+    * This method determines the type of parcel to be used based on the items to be placed.
+    */
     public void determineType(){
 
     }
