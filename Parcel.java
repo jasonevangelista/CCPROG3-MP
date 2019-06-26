@@ -161,7 +161,7 @@ public class Parcel {
         System.out.println("TOTAL FEE -     Php" + computeTotalFee(baseFee, serviceFee, insuranceFee));
     }
     // getters and setters
-
+    //
 
 
 
