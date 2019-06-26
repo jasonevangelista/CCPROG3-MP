@@ -11,7 +11,7 @@ public class Parcel {
     private     ArrayList<Item> listItem;
     private     String          type;
     private     int             seqNum;
-    private     double          totalPrice = 0;
+    private     double          totalFee = 0;
     private     double          serviceFee;
     private     double          insuranceFee;
     private     double          totalWeight = 0;
@@ -110,15 +110,58 @@ public class Parcel {
     public void determineType(){
 
     }
+    /**
+     * This method computes the base fee based on the type of parcel.
+     */
+    public double computeBaseFee(String parcelType){
+        if(parcelType.equalsIgnoreCase("Flat1"))
+            return 30;
+        else if(parcelType.equalsIgnoreCase("Flat2"))
+            return 50;
+        else if(parcelType.equalsIgnoreCase("Box1") || parcelType.equalsIgnoreCase("Box2") ||
+                parcelType.equalsIgnoreCase("Box3") || parcelType.equalsIgnoreCase("Box4")){
+                /*
+                loop through each item, if regular docu or product, php40/kilo
+                
+                if irregularly shaped, either php40/kilo of actual weight or
+                php30/kilo of volumetric weight (whichever is higher)
+
+                volumetric weight (in kilo) = (length x width x height) / 305
+                */
+                }
+        else
+            return 0;
+    }
 
     /**
      * This method computes the total amount needed for the transaction to be complete.
+     * 
+     * @param baseFee - base fee from type of parcel and/or weight
+     * @param serviceFee - delivery fee based on region
+     * @param insuranceFee - additional fee for applying insurance (if applicable)
+     * @return total fee amount
      */
-    public void computeTotalPrice(){
-
+    public double computeTotalFee(double baseFee, double serviceFee, double insuranceFee){
+        return baseFee + serviceFee + insuranceFee;
     }
 
+    /**
+     * This method displays the breakdown of the total fee.
+     * 
+     * @param baseFee - base fee from type of parcel and/or weight
+     * @param serviceFee - delivery fee based on region
+     * @param insuranceFee - additional fee for applying insurance (if applicable)
+     */
+    public void displayFeeBreakdown(double baseFee, double serviceFee, double insuranceFee){
+        System.out.println("==BREAKDOWN OF FEES==");
+        System.out.println("BASE FEE -      Php" + baseFee);
+        System.out.println("SERVICE FEE -   Php" + serviceFee);
+        System.out.println("INSURANCE FEE - Php" + insuranceFee);
+        System.out.println("----------------------------");
+        System.out.println("TOTAL FEE -     Php" + computeTotalFee(baseFee, serviceFee, insuranceFee));
+    }
     // getters and setters
+
 
 
 
