@@ -5,6 +5,23 @@ import java.util.ArrayList;
  */
 public class Parcel {
 
+    private     static int      MAX_FLAT_WEIGHT = 3; // in kg 
+
+    private     static int      FLAT[][] = {{-1, 9, 14, 1},{0, 12, 18, 3}};
+                                // format: flat #, length, width, max thickness
+    
+    private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, {3, 18, 12, 9}, {4, 20, 16, 12}};
+                                // format: box #, length, width, height
+    /*
+        Symbol of index 0 of arrays FLAT[] and BOX[]:
+        -1 -> FLT1
+        0  -> FLT2
+        1  -> BOX1
+        2  -> BOX2
+        3  -> BOX3
+        4  -> BOX4
+    */
+
     private     String          recipientName;
     private     String          delRegion;
     private     int             quantity;
@@ -18,13 +35,6 @@ public class Parcel {
     private     double          totalVolume = 0;
     private     int             deliveryDays;
     private     boolean         insurance;
-
-    private     static int      FLAT[][] = {{1, 9, 14, 1},{2, 12, 18, 3}};
-                                // format: flat #, length, width, max thickness
-    private     static int      MAX_FLAT_WEIGHT = 3; // in kg 
-    
-    private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, {3, 18, 12, 9}, {4, 20, 16, 12}};
-                                // format: box #, length, width, height
 
     /**
      * This constructor takes in the parcel's recipient name, destination region,
@@ -46,8 +56,8 @@ public class Parcel {
         this.seqNum = seqNum;
         this.insurance = insurance;
 
-        this.addRegionDetails();
-        this.computeInsuranceFee();
+        addRegionDetails();
+        computeInsuranceFee();
     }
 
     /**
@@ -105,21 +115,83 @@ public class Parcel {
     }
 
     /** 
-    * This method determines the type of parcel to be used based on the items to be placed.
+    * This method determines the valid types of parcel to be used based on the items to be placed.
     */
-    public void determineType(){
+    public ArrayList<int[]> determineValidTypes(Item item){
+        ArrayList<int[]> finalTypes = new ArrayList<int[]>();
 
+        int length = item.getLength();
+        int width = item.getWidth();
+        int height = item.getHeight();
+
+        int i, j;
+
+        int itemVolume = computeVolume(length, width, height);
+        int[][] rotations = rotations(length, width, height);
+
+        boolean foundFlat = false;
+        boolean foundBox = false;
+
+        for(i = 0; i < FLAT.length; i++){
+            if(itemVolume <= computeVolume(FLAT[i][1], FLAT[i][2], FLAT[i][3]) && item.getWeight() <= 3){
+                for(j = 0; j < 6; j++){
+                    if(rotations[j][0] <= FLAT[i][1] && rotations[j][1] <= FLAT[i][2] && rotations[j][2] <= FLAT[i][3]){
+                        foundFlat = true;
+                        break;
+                    }
+                }
+            }
+            if(foundFlat)
+                finalTypes.add(FLAT[i]);
+        }
+
+        for(i = 0; i < BOX.length; i++){
+            if(foundFlat)
+                finalTypes.add(BOX[i]);
+            
+            else{
+                if(itemVolume <= computeVolume(BOX[i][1], BOX[i][2], BOX[i][3])){
+                    for(j = 0; j < 6; j++){
+                        if(rotations[j][0] <= BOX[i][1] && rotations[j][1] <= BOX[i][2] && rotations[j][2] <= BOX[i][3]){
+                            foundBox = true;
+                            break;
+                        }
+                    }
+                }
+                if(foundBox)
+                    finalTypes.add(BOX[i]);
+            }
+        }
+        return finalTypes;
+    }
+
+    public int[][] rotations(int length, int width, int height){
+        int rotations[][] = new int[][]
+        {
+            {length, width, height},
+            {length, height, width},
+            {width, length, height},
+            {width, height, length},
+            {height, length, width},
+            {height, width, length}
+         };
+
+         return rotations;
+    }
+
+    public int computeVolume(int length, int width, int height){
+        return length * width * height;
     }
     /**
      * This method computes the base fee based on the type of parcel.
      */
     public double computeBaseFee(String parcelType){
-        if(parcelType.equalsIgnoreCase("Flat1"))
+        if(parcelType.equalsIgnoreCase("FLT1"))
             return 30;
-        else if(parcelType.equalsIgnoreCase("Flat2"))
+        else if(parcelType.equalsIgnoreCase("FLT2"))
             return 50;
-        else if(parcelType.equalsIgnoreCase("Box1") || parcelType.equalsIgnoreCase("Box2") ||
-                parcelType.equalsIgnoreCase("Box3") || parcelType.equalsIgnoreCase("Box4")){
+        else if(parcelType.equalsIgnoreCase("BOX1") || parcelType.equalsIgnoreCase("BOX2") ||
+                parcelType.equalsIgnoreCase("BOX3") || parcelType.equalsIgnoreCase("BOX4")){
                 /*
                 loop through each item, if regular docu or product, php40/kilo
                 
@@ -128,6 +200,7 @@ public class Parcel {
 
                 volumetric weight (in kilo) = (length x width x height) / 305
                 */
+                return 0;
                 }
         else
             return 0;
@@ -163,7 +236,19 @@ public class Parcel {
     // getters and setters
     //
 
-
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
 
 
 }
