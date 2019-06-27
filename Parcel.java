@@ -28,6 +28,7 @@ public class Parcel {
     private     ArrayList<Item> listItem;
     private     String          type;
     private     int             seqNum;
+    private     double          baseFee;
     private     double          totalFee = 0;
     private     double          serviceFee;
     private     double          insuranceFee;
@@ -248,6 +249,27 @@ public class Parcel {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * @return the baseFee
+     */
+    public double getBaseFee() {
+        return baseFee;
+    }
+    
+    /**
+     * @return the serviceFee
+     */
+    public double getServiceFee() {
+        return serviceFee;
+    }
+
+    /**
+     * @return the insuranceFee
+     */
+    public double getInsuranceFee() {
+        return insuranceFee;
     }
 
 

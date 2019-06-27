@@ -2,15 +2,15 @@
  * Item
  */
 public class Item {
-    private     double      length;
-    private     double      width;
-    private     double      height;
+    private     int      length;
+    private     int      width;
+    private     int      height;
     private     double      weight;
     private     int         numPage;
     private     String      type;
 
 
-    public Item(String type, double length, double width){
+    public Item(String type, int length, int width){
         this.type = type;
         this.length = length;
         this.width = width;
@@ -23,7 +23,7 @@ public class Item {
     *   @param width The width of the page of the document.
     *   @param numPage The number of pages of the document.
     */
-    public Item(String type, double length, double width, int numPage){
+    public Item(String type, int length, int width, int numPage){
         this(type, length, width);
         this.numPage = numPage;
 
@@ -41,7 +41,7 @@ public class Item {
     *   @param height The height of the product.
     *   @param weight The weight of the product.
     */
-    public Item(String type, double length, double width, double height, double weight){
+    public Item(String type, int length, int width, int height, double weight){
         this(type, length, width);
         this.height = height;
         this.weight = weight;
@@ -86,6 +86,34 @@ public class Item {
                 weight += 200;
             }
         }
+        return weight;
+    }
+
+     /**
+     * @return the length
+     */
+    public int getLength() {
+        return length;
+    }
+
+    /**
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * @return the weight
+     */
+    public double getWeight() {
         return weight;
     }
 

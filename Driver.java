@@ -176,6 +176,7 @@ public class Driver {
 
 
         /* program shows breakdown of the fee and total fee and generates tracking info */
+        parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
 
         /* After transaction, program should allow user to choose to have another 
         parcel delivered, track the parcel/s, or exit program */
