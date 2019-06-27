@@ -18,13 +18,17 @@ public class Driver {
         boolean insurance;
 
         ArrayList<Item> listItem = new ArrayList<Item>();
+        ArrayList<int[]> types = new ArrayList<int[]>();
+        ArrayList<String> choices = new ArrayList<String>();
 
         String itemType;
-        double itemLength;
-        double itemWidth;
-        double itemHeight;
+        int itemLength;
+        int itemWidth;
+        int itemHeight;
         double itemWeight;
         int itemNumPage;
+
+        String parcelType;
 
         /* input info */
 
@@ -49,13 +53,17 @@ public class Driver {
             region = "Visayas";
         else if(inputInt == 4)
             region = "Mindanao";
-        else
+        else{
             System.out.println("error"); // error
+            region = "";
+        }
 
         // number of items to place
-        System.out.print("Enter number of items to place in parcel: ");
-        numItem = sc.nextInt();
-        sc.nextLine();
+        // System.out.print("Enter number of items to place in parcel: ");
+        // numItem = sc.nextInt();
+        // sc.nextLine();
+
+        numItem = 1;
 
         // all the info of each item
         for(int i = 0; i < numItem; i++){
@@ -71,12 +79,12 @@ public class Driver {
 
             // length
             System.out.print("Enter Length (inches): ");
-            itemLength = sc.nextDouble();
+            itemLength = sc.nextInt();
             sc.nextLine();
 
             // width
             System.out.print("Enter Width (inches): ");
-            itemWidth = sc.nextDouble();
+            itemWidth = sc.nextInt();
             sc.nextLine();
             
             //if docu, ask number of pages
@@ -94,7 +102,7 @@ public class Driver {
             else if(inputInt == 2){
                 itemType = "product";
                 System.out.print("Enter Height (inches): ");
-                itemHeight = sc.nextDouble();
+                itemHeight = sc.nextInt();
                 sc.nextLine();
                 System.out.print("Enter Weight (kilo): ");
                 itemWeight = sc.nextDouble();
@@ -125,11 +133,47 @@ public class Driver {
             System.out.println("error"); // error
         }
 
-
+        
         /* program determines the type of parcels that can be used */
-        // Parcel parcel = new Parcel(name, sRegion, numItem, listItem, seqNum, bInsurance);
+        Parcel parcel = new Parcel(name, region, numItem, listItem, seqNum, insurance);
 
+       
+        types = parcel.determineValidTypes(listItem.get(0));
+
+        for(int i = 0; i < types.size(); i++){
+            System.out.println(types.get(i)[0]);
+        }
+        
         /* user chooses the type of parcel he wants */
+        System.out.println("Valid Parcels to use:");
+        for (int i = 0; i < types.size(); i++) {
+            if(types.get(i)[0] == -1)
+                choices.add("FLT1");
+            else if(types.get(i)[0] == 0)
+                choices.add("FLT2");
+            else if(types.get(i)[0] == 1)
+                choices.add("BOX1");
+            else if(types.get(i)[0] == 2)
+                choices.add("BOX2");
+            else if(types.get(i)[0] == 3)
+                choices.add("BOX3");
+            else if(types.get(i)[0] == 4)
+                choices.add("BOX4");
+        }
+
+        for (int i = 0; i < choices.size(); i++) {
+            System.out.println("--> "+ choices.get(i));
+        }
+
+        System.out.print("Enter parcel of choice: ");
+        parcelType = sc.nextLine();
+        if(choices.contains(parcelType))
+            parcel.setType(parcelType);
+        else
+            System.out.println("error invalid parcel type input!!!");
+
+        System.out.println("TYPE OF PARCEL: " + parcel.getType());
+
 
         /* program shows breakdown of the fee and total fee and generates tracking info */
 
