@@ -268,7 +268,7 @@ public class Parcel {
     }
     
     /* Getters */
-
+    
     /**
      * @return Parcel Type
      */
