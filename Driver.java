@@ -47,13 +47,13 @@ public class Driver {
         inputInt = sc.nextInt();
         sc.nextLine();
         if(inputInt == 1)
-            region = "Metro Manila";
+            region = "MML";
         else if(inputInt == 2)
-            region = "Provincial Luzon";
+            region = "LUZ";
         else if(inputInt == 3)
-            region = "Visayas";
+            region = "VIS";
         else if(inputInt == 4)
-            region = "Mindanao";
+            region = "MIN";
         else{
             System.out.println("error"); // error
             region = "";
@@ -120,11 +120,9 @@ public class Driver {
                 Item item = new Item(itemType, itemLength, itemWidth, itemHeight, itemWeight, itemShape);
                 listItem.add(item);
             }
-
             else{
                 System.out.println("error");
             }
-
         }
         
         // apply insurance or not
@@ -171,7 +169,8 @@ public class Driver {
         }
 
         for (int i = 0; i < choices.size(); i++) {
-            System.out.println("--> "+ choices.get(i));
+            System.out.print("--> "+ choices.get(i) + " - ");
+            parcel.displayDimensions(choices.get(i));
         }
 
         System.out.print("Enter parcel of choice: ");

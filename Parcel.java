@@ -6,10 +6,8 @@ import java.util.ArrayList;
 public class Parcel {
 
     private     static int      MAX_FLAT_WEIGHT = 3; // in kg 
-
     private     static int      FLAT[][] = {{-1, 9, 14, 1},{0, 12, 18, 3}};
                                 // format: flat #, length, width, max thickness
-    
     private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, {3, 18, 12, 9}, {4, 20, 16, 12}};
                                 // format: box #, length, width, height
     /*
@@ -65,15 +63,15 @@ public class Parcel {
      * the service fee depending on the region.
      */
     public void addRegionDetails(){
-        if(this.delRegion.equalsIgnoreCase("Metro Manila")){
+        if(this.delRegion.equalsIgnoreCase("MML")){
             this.deliveryDays = 2;
             this.serviceFee = 50;
         }
-        else if(this.delRegion.equalsIgnoreCase("Provincial Luzon")){
+        else if(this.delRegion.equalsIgnoreCase("LUZ")){
             this.deliveryDays = 3;
             this.serviceFee = 100;
         }
-        else if(this.delRegion.equalsIgnoreCase("Visayas")){
+        else if(this.delRegion.equalsIgnoreCase("VIS")){
             this.deliveryDays = 5;
             if(this.totalVolume > this.totalWeight){
                 if(this.totalVolume * 0.10 > 1000)
@@ -88,7 +86,7 @@ public class Parcel {
                     this.serviceFee = 1000;
             }
         }
-        else if(this.delRegion.equalsIgnoreCase("Mindanao")){
+        else if(this.delRegion.equalsIgnoreCase("MIN")){
             this.deliveryDays = 8;
             if(this.totalVolume > this.totalWeight){
                 if(this.totalVolume * 0.25 > 3000)
@@ -127,7 +125,7 @@ public class Parcel {
         boolean foundBox = false;
 
         for(i = 0; i < FLAT.length; i++){
-            if(itemVolume <= computeVolume(FLAT[i][1], FLAT[i][2], FLAT[i][3]) && item.getWeight() <= 3){
+            if(itemVolume <= computeVolume(FLAT[i][1], FLAT[i][2], FLAT[i][3]) && item.getWeight() <= MAX_FLAT_WEIGHT){
                 for(j = 0; j < 6; j++){
                     if(rotations[j][0] <= FLAT[i][1] && rotations[j][1] <= FLAT[i][2] && rotations[j][2] <= FLAT[i][3]){
                         foundFlat = true;
@@ -267,6 +265,29 @@ public class Parcel {
         System.out.println("TOTAL FEE -     Php" + computeTotalFee(baseFee, serviceFee, insuranceFee));
     }
     
+    public void displayDimensions(String parcelType){
+        if(parcelType.equalsIgnoreCase("FLT1"))
+            System.out.println(FLAT[0][1] + " x " + FLAT[0][2] + " x " + FLAT[0][3]);
+        else if(parcelType.equalsIgnoreCase("FLT2"))
+            System.out.println(FLAT[1][1] + " x " + FLAT[1][2] + " x " + FLAT[1][3]);
+        else if(parcelType.equalsIgnoreCase("BOX1"))
+            System.out.println(BOX[0][1] + " x " + BOX[0][2] + " x " + BOX[0][3]);
+        else if(parcelType.equalsIgnoreCase("BOX2"))
+            System.out.println(BOX[1][1] + " x " + BOX[1][2] + " x " + BOX[1][3]);
+        else if(parcelType.equalsIgnoreCase("BOX3"))
+            System.out.println(BOX[2][1] + " x " + BOX[2][2] + " x " + BOX[2][3]);
+        else if(parcelType.equalsIgnoreCase("BOX4"))
+            System.out.println(BOX[3][1] + " x " + BOX[3][2] + " x " + BOX[3][3]);
+    }
+
+    public void displayTrackingInfo(){
+        // parceltype
+        // MMDD   
+        // DestCode
+        // #items
+        // #seq
+    }
+
     /* Getters */
     
     /**
