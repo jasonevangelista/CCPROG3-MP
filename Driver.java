@@ -27,6 +27,7 @@ public class Driver {
         int itemHeight;
         double itemWeight;
         int itemNumPage;
+        boolean itemShape;
 
         String parcelType;
 
@@ -107,8 +108,16 @@ public class Driver {
                 System.out.print("Enter Weight (kilo): ");
                 itemWeight = sc.nextDouble();
                 sc.nextLine();
+                System.out.println("Shape of Product:");
+                System.out.println("[1] Regular");
+                System.out.println("[2] Irregular");
+                System.out.print("Enter input: ");
+                if(sc.nextInt() == 1)
+                    itemShape = true;
+                else
+                    itemShape = false;
 
-                Item item = new Item(itemType, itemLength, itemWidth, itemHeight, itemWeight);
+                Item item = new Item(itemType, itemLength, itemWidth, itemHeight, itemWeight, itemShape);
                 listItem.add(item);
             }
 
@@ -176,10 +185,19 @@ public class Driver {
 
 
         /* program shows breakdown of the fee and total fee and generates tracking info */
+        parcel.setInsuranceFee(parcel.computeInsuranceFee(parcel.getInsurance()));
+        parcel.setBaseFee(parcel.computeBaseFee(parcel.getType(), parcel.getListItem().get(0)));
         parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
 
         /* After transaction, program should allow user to choose to have another 
         parcel delivered, track the parcel/s, or exit program */
+
+        /*
+        Options:
+        - Track
+        - Start New Transaction
+        - Exit (staff only)
+        */
 
     }
 }
