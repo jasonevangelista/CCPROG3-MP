@@ -58,8 +58,6 @@ public class Parcel {
         this.insurance = insurance;
 
         addRegionDetails();
-        // this.insuranceFee = computeInsuranceFee(this.insurance);
-        // this.baseFee = computeBaseFee(this.type ,listItem.get(0));
     }
 
     /**
@@ -107,19 +105,11 @@ public class Parcel {
         }
     }
 
-    /**
-     * This method determines the amount added to the price if insurance is applied
-     * to the parcel.
-     */
-    public double computeInsuranceFee(boolean insurance){
-        if(insurance)
-            return 5 * this.quantity;
-        else 
-            return 0;
-    }
-
     /** 
     * This method determines the valid types of parcel to be used based on the items to be placed.
+    * 
+    * @param item The item which will be placed in the parcel
+    * @return The dimensions of the different possible parcel types to use
     */
     public ArrayList<int[]> determineValidTypes(Item item){
         ArrayList<int[]> finalTypes = new ArrayList<int[]>();
@@ -169,6 +159,14 @@ public class Parcel {
         return finalTypes;
     }
 
+    /**
+     * This method generates all possible combinations of the dimensions of an item.
+     * 
+     * @param length The length of the item
+     * @param width The width of the item
+     * @param height The height of the item
+     * @return The 2D-arrays of all possible rotation combinations
+     */
     public int[][] rotations(int length, int width, int height){
         int rotations[][] = new int[][]
         {
@@ -183,12 +181,24 @@ public class Parcel {
          return rotations;
     }
 
+    /**
+     * This method calculates the volume of an item based on its length, width, and height.
+     * 
+     * @param length The length of the item
+     * @param width The width of the item
+     * @param height The height of the item
+     * @return The volume of the item
+     */
     public int computeVolume(int length, int width, int height){
         return length * width * height;
     }
 
     /**
-     * This method computes the base fee based on the type of parcel.
+     * This method computes the base fee based on the type of parcel and shape of item.
+     * 
+     * @param parcelType The type of parcel
+     * @param item The item to be placed in the parcel
+     * @return the base fee of the parcel
      */
     public double computeBaseFee(String parcelType, Item item){
         int actualRate = item.getWeight() * 40;
@@ -213,6 +223,20 @@ public class Parcel {
             return 0; // error
         }
             
+    }
+
+    /**
+     * This method determines the amount added to the price if insurance is applied
+     * to the parcel.
+     * 
+     * @param insurance Whether insurance is applied or not
+     * @return The parcel's insurance fee
+     */
+    public double computeInsuranceFee(boolean insurance){
+        if(insurance)
+            return 5 * this.quantity;
+        else 
+            return 0;
     }
 
     /**
@@ -242,53 +266,58 @@ public class Parcel {
         System.out.println("----------------------------");
         System.out.println("TOTAL FEE -     Php" + computeTotalFee(baseFee, serviceFee, insuranceFee));
     }
-    // getters and setters
-    //
+    
+    /* Getters */
 
     /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-    
-    /**
-     * @return the type
+     * @return Parcel Type
      */
     public String getType() {
         return type;
     }
 
     /**
-     * @return the baseFee
+     * @return List of items in parcel
+     */
+    public ArrayList<Item> getListItem() {
+        return listItem;
+    }
+
+    /**
+     * @return the status whether insurance will be applied or not
+     */
+    public boolean getInsurance(){
+        return this.insurance;
+    }
+
+    /**
+     * @return Base Fee
      */
     public double getBaseFee() {
         return baseFee;
     }
     
     /**
-     * @return the serviceFee
+     * @return Service Fee
      */
     public double getServiceFee() {
         return serviceFee;
     }
 
     /**
-     * @return the insuranceFee
+     * @return Insurance Fee
      */
     public double getInsuranceFee() {
         return insuranceFee;
     }
 
-    /**
-     * @return the listItem
-     */
-    public ArrayList<Item> getListItem() {
-        return listItem;
-    }
+    /* Setters */
 
-    public boolean getInsurance(){
-        return this.insurance;
+    /**
+     * @param type The parcel type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -304,6 +333,4 @@ public class Parcel {
     public void setInsuranceFee(double insuranceFee) {
         this.insuranceFee = insuranceFee;
     }
-
-
 }
