@@ -2,14 +2,20 @@
  * Item
  */
 public class Item {
-    private     int      length;
-    private     int      width;
-    private     int      height;
-    private     double      weight;
+    private     int         length;
+    private     int         width;
+    private     int         height;
+    private     int         weight;
     private     int         numPage;
     private     String      type;
+    private     boolean     regularShape;
 
-
+    /**
+     * This constructor takes in the item's type, length, and width.
+     *   @param type The type of parcel. Either flat or box.
+     *   @param length The length of the page of the document.
+     *   @param width The width of the page of the document.
+     */
     public Item(String type, int length, int width){
         this.type = type;
         this.length = length;
@@ -31,6 +37,7 @@ public class Item {
         this.height = computeThickness(this.numPage);
         // compute weight
         this.weight = computeWeight(this.numPage);
+        this.regularShape = true;
     }
 
     /**
@@ -41,14 +48,15 @@ public class Item {
     *   @param height The height of the product.
     *   @param weight The weight of the product.
     */
-    public Item(String type, int length, int width, int height, double weight){
+    public Item(String type, int length, int width, int height, double weight, boolean regularShape){
         this(type, length, width);
         this.height = height;
-        this.weight = weight;
+        this.weight = (int) Math.ceil(weight);
+        this.regularShape = regularShape;
     }
 
     /**
-    *   This function is used to compute for the thickness of 
+    *   This method is used to compute for the thickness of 
     *   document-type item. 25 pages = 1 inch, round up on excess.
     *   @param numPage Indicates the number of pages of the document.
     *   @return The thickness of the document in inches.
@@ -69,7 +77,7 @@ public class Item {
     }
 
     /**
-    *   This function is used to compute for the weight of 
+    *   This method is used to compute for the weight of 
     *   document-type item. 25 pages = 200g, round up on excess.
     *   @param numPage Indicates the number of pages of the document.
     *   @return The weight of the document in grams.
@@ -113,14 +121,21 @@ public class Item {
     /**
      * @return the weight
      */
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
     /**
-    *   Getter function for the item type; Document, product
+    *   @return item type (Document / product)
     */
     public String getItemType(){
         return type;
+    }
+
+    /**
+     * @return shape of item (regular - true / irregular - false)
+     */
+    public boolean getShape(){
+        return regularShape;
     }
 }
