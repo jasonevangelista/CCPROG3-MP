@@ -58,7 +58,8 @@ public class Parcel {
         this.insurance = insurance;
 
         addRegionDetails();
-        computeInsuranceFee();
+        // this.insuranceFee = computeInsuranceFee(this.insurance);
+        // this.baseFee = computeBaseFee(this.type ,listItem.get(0));
     }
 
     /**
@@ -110,9 +111,11 @@ public class Parcel {
      * This method determines the amount added to the price if insurance is applied
      * to the parcel.
      */
-    public void computeInsuranceFee(){
-        if(this.insurance)
-            this.insuranceFee = 5 * this.quantity;
+    public double computeInsuranceFee(boolean insurance){
+        if(insurance)
+            return 5 * this.quantity;
+        else 
+            return 0;
     }
 
     /** 
@@ -183,28 +186,33 @@ public class Parcel {
     public int computeVolume(int length, int width, int height){
         return length * width * height;
     }
+
     /**
      * This method computes the base fee based on the type of parcel.
      */
-    public double computeBaseFee(String parcelType){
+    public double computeBaseFee(String parcelType, Item item){
+        int actualRate = item.getWeight() * 40;
+        int volumetricRate = item.getLength() * item.getWidth() * item.getHeight() / 305 * 30;
         if(parcelType.equalsIgnoreCase("FLT1"))
             return 30;
         else if(parcelType.equalsIgnoreCase("FLT2"))
             return 50;
         else if(parcelType.equalsIgnoreCase("BOX1") || parcelType.equalsIgnoreCase("BOX2") ||
                 parcelType.equalsIgnoreCase("BOX3") || parcelType.equalsIgnoreCase("BOX4")){
-                /*
-                loop through each item, if regular docu or product, php40/kilo
-                
-                if irregularly shaped, either php40/kilo of actual weight or
-                php30/kilo of volumetric weight (whichever is higher)
-
-                volumetric weight (in kilo) = (length x width x height) / 305
-                */
-                return 0;
+                if(item.getShape())
+                    return actualRate;
+                else{
+                    if(actualRate > volumetricRate)
+                        return actualRate;
+                    else
+                        return volumetricRate;
                 }
-        else
-            return 0;
+        }
+        else{
+            System.out.println("invalid parcel type");
+            return 0; // error
+        }
+            
     }
 
     /**
@@ -270,6 +278,31 @@ public class Parcel {
      */
     public double getInsuranceFee() {
         return insuranceFee;
+    }
+
+    /**
+     * @return the listItem
+     */
+    public ArrayList<Item> getListItem() {
+        return listItem;
+    }
+
+    public boolean getInsurance(){
+        return this.insurance;
+    }
+
+    /**
+     * @param baseFee the baseFee to set
+     */
+    public void setBaseFee(double baseFee) {
+        this.baseFee = baseFee;
+    }
+
+    /**
+     * @param insuranceFee the insuranceFee to set
+     */
+    public void setInsuranceFee(double insuranceFee) {
+        this.insuranceFee = insuranceFee;
     }
 
 
