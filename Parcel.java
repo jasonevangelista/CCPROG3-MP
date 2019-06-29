@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Calendar;
+// import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Parcel
@@ -37,7 +40,8 @@ public class Parcel {
     private     int             deliveryDays;
     private     boolean         insurance;
 
-    private     final String    trackingNumber;
+    private     String          dateOfTransaction;
+    private     String          trackingNumber;
 
     /**
      * This constructor takes in the parcel's recipient name, destination region,
@@ -59,7 +63,10 @@ public class Parcel {
         this.seqNum = seqNum;
         this.insurance = insurance;
 
+        this.trackingNumber = "";
+
         addRegionDetails();
+        setDate();
     }
 
     /**
@@ -287,23 +294,18 @@ public class Parcel {
     public String generateTrackingNum(Parcel parcel, int seqNum, String date){
         String track = "";
 
-        // parcel type
         if(parcel.getType().equals("FLT1") || parcel.getType().equalsIgnoreCase("FLT2"))
             track += "FLT";
         else
             track += "BOX";
 
-        // add month date
         track += date;
-
-        // destCode
         track += parcel.getDelRegion();
-
-        // items #
         track += String.format("%02d", parcel.getListItem().size());
-
-        // seq #
         track += String.format("%03d",seqNum);
+
+        // track += date + parcel.getDelRegion() + String.format("%02d", parcel.getListItem().size()) 
+        //       + String.format("%03d",seqNum);
 
         return track;
     }
@@ -368,6 +370,13 @@ public class Parcel {
         return trackingNumber;
     }
 
+    /**
+     * @return the dateOfTransaction
+     */
+    public String getDateOfTransaction() {
+        return dateOfTransaction;
+    }
+
     /* Setters */
 
     /**
@@ -396,5 +405,13 @@ public class Parcel {
      */
     public void setTrackingNum(String trackingNumber){
         this.trackingNumber = trackingNumber;
+    }
+
+    public void setDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Calendar cal = Calendar.getInstance();
+
+        this.dateOfTransaction = dateFormat.format(cal.getTime());
+
     }
 }
