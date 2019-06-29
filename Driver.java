@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Date;
+import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 
@@ -26,14 +26,23 @@ public class Driver {
         ArrayList<String> choices;
         ArrayList<Parcel> parcels = new ArrayList<Parcel>();
 
-
         boolean run = true;
         int actionInt;
         int transactions = 0;
 
+        Calendar cal = Calendar.getInstance();
+
         while(run){
             
+            System.out.println(driver.formatDate(cal));
+                if(seqNum == 10){ // every 10 transactions == 1 day
+                    cal.add(Calendar.DATE, 1);
+                    seqNum = 0;
+                }
+
             actionInt = driver.mainMenu(sc);
+
+            
 
             if(actionInt == 1){
                 listItem = new ArrayList<Item>();
@@ -98,12 +107,10 @@ public class Driver {
                 parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
 
                 // generate tracking number
-                parcel.setTrackingNum(parcel.generateTrackingNum(parcel, seqNum, driver.formatDate()));
+                parcel.setTrackingNum(parcel.generateTrackingNum(parcel, seqNum, driver.formatDate(cal)));
                 System.out.println("\nTRACKING NUMBER: " + parcel.getTrackingNumber());
 
-                /* After transaction, program should allow user to choose to have another 
-                    parcel delivered, track the parcel/s, or exit program */
-                
+                parcels.add(parcel);
 
             }
             else if(actionInt == 2){
@@ -118,17 +125,7 @@ public class Driver {
             else{
                 System.out.println("ERROR");
             }
-
         }
-
-     
-
-        /*
-        Options:
-        - Track
-        - Start New Transaction
-        - Exit (staff only)
-        */
         sc.close();
     }
 
@@ -283,20 +280,25 @@ public class Driver {
         return inputInt;
     }
 
-    public String formatDate(){
+    public String formatDate(Calendar cal){
         String sPattern = "MMdd";
 
         SimpleDateFormat DateFormat = new SimpleDateFormat(sPattern);
-        String CurrentDate = DateFormat.format(new Date());
+        String CurrentDate = DateFormat.format(cal.getTime());
 
         return CurrentDate;
     }
 
     public void displayTrackingInfo(ArrayList<Parcel> parcels, String trackingNum){
-
+        System.out.println("Tracking Info:");
         for(int i = 0; i < parcels.size(); i++){
             if(parcels.get(i).getTrackingNumber().equals(trackingNum)){
-                // display tracking info
+                // start date (date when transaction is made)
+                System.out.println(parcels.get(i).getDateOfTransaction());
+                // generated tracking number
+                System.out.println(parcels.get(i).getTrackingNumber());
+                // current status
+                // update date
             }
         }
         // start date (date when transaction is made)
