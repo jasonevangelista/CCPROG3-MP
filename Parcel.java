@@ -26,14 +26,18 @@ public class Parcel {
     private     ArrayList<Item> listItem;
     private     String          type;
     private     int             seqNum;
+
     private     double          baseFee;
     private     double          totalFee = 0;
     private     double          serviceFee;
     private     double          insuranceFee;
+
     private     double          totalWeight = 0;
     private     double          totalVolume = 0;
     private     int             deliveryDays;
     private     boolean         insurance;
+
+    private     final String    trackingNumber;
 
     /**
      * This constructor takes in the parcel's recipient name, destination region,
@@ -280,12 +284,28 @@ public class Parcel {
             System.out.println(BOX[3][1] + " x " + BOX[3][2] + " x " + BOX[3][3]);
     }
 
-    public void displayTrackingInfo(){
-        // parceltype
-        // MMDD   
-        // DestCode
-        // #items
-        // #seq
+    public String generateTrackingNum(Parcel parcel, int seqNum, String date){
+        String track = "";
+
+        // parcel type
+        if(parcel.getType().equals("FLT1") || parcel.getType().equalsIgnoreCase("FLT2"))
+            track += "FLT";
+        else
+            track += "BOX";
+
+        // add month date
+        track += date;
+
+        // destCode
+        track += parcel.getDelRegion();
+
+        // items #
+        track += String.format("%02d", parcel.getListItem().size());
+
+        // seq #
+        track += String.format("%03d",seqNum);
+
+        return track;
     }
 
     /* Getters */
@@ -296,6 +316,15 @@ public class Parcel {
     public String getType() {
         return type;
     }
+
+    /**
+     * @return the delRegion
+     */
+    public String getDelRegion() {
+        return delRegion;
+    }
+
+    
 
     /**
      * @return List of items in parcel
@@ -332,6 +361,13 @@ public class Parcel {
         return insuranceFee;
     }
 
+    /**
+     * @return the trackingNumber
+     */
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
     /* Setters */
 
     /**
@@ -353,5 +389,12 @@ public class Parcel {
      */
     public void setInsuranceFee(double insuranceFee) {
         this.insuranceFee = insuranceFee;
+    }
+
+    /**
+     * @param trackingNumber the tracking number to set
+     */
+    public void setTrackingNum(String trackingNumber){
+        this.trackingNumber = trackingNumber;
     }
 }
