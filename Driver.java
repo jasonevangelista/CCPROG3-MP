@@ -1,6 +1,8 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Calendar;
+// import java.util.ArrayList;
+// import java.util.Scanner;
+// import java.util.Calendar;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.text.SimpleDateFormat;
 
 
@@ -41,8 +43,6 @@ public class Driver {
                 }
 
             actionInt = driver.mainMenu(sc);
-
-            
 
             if(actionInt == 1){
                 listItem = new ArrayList<Item>();
@@ -116,8 +116,8 @@ public class Driver {
             else if(actionInt == 2){
                 // track parcel
                 trackingNum = driver.inputTrackingNum(sc);
+                driver.displayTrackingInfo(parcels, trackingNum, cal, driver);
                 
-
             }
             else if(actionInt == 3){
                 run = false;
@@ -289,22 +289,39 @@ public class Driver {
         return CurrentDate;
     }
 
-    public void displayTrackingInfo(ArrayList<Parcel> parcels, String trackingNum){
-        System.out.println("Tracking Info:");
+    public void displayTrackingInfo(ArrayList<Parcel> parcels, String trackingNum, Calendar cal, Driver d){
+        System.out.println("\n=======================================");
+        System.out.println("TRACKING INFO:\n");
         for(int i = 0; i < parcels.size(); i++){
             if(parcels.get(i).getTrackingNumber().equals(trackingNum)){
                 // start date (date when transaction is made)
+
+                System.out.print("Date of Transaction: \t");
                 System.out.println(parcels.get(i).getDateOfTransaction());
                 // generated tracking number
+                System.out.print("Tracking Number: \t");
                 System.out.println(parcels.get(i).getTrackingNumber());
                 // current status
+                System.out.print("Current Status: \t");
+                // System.out.println("DIFFERENCE IN DAYS: " + d.getDifferenceDays(parcels.get(i).getDate(), cal) );
+                parcels.get(i).displayDeliveryStatus(parcels.get(i).getDeliveryDays(), 
+                d.getDifferenceDays(cal,parcels.get(i).getDate()) );
+                
                 // update date
+                System.out.print("Current Date: \t\t");
+                System.out.println(d.setDateFormat(cal));
             }
         }
-        // start date (date when transaction is made)
-        // generated tracking number
-        // current status
-        // update date
+        System.out.println("=======================================\n");
+    }
+    public int getDifferenceDays(Calendar startDate, Calendar latestDate){
+        long diff = latestDate.getTime().getTime() - startDate.getTime().getTime();
+        return (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
     }
 
+    public String setDateFormat(Calendar cal){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        return dateFormat.format(cal.getTime());
+    }
+    
 }
