@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 // import java.text.DateFormat;
+import java.util.concurrent.TimeUnit;
 import java.text.SimpleDateFormat;
 
 /**
@@ -41,6 +42,7 @@ public class Parcel {
     private     boolean         insurance;
 
     private     String          dateOfTransaction;
+    private     Calendar        date;
     private     String          trackingNumber;
 
     /**
@@ -310,6 +312,20 @@ public class Parcel {
         return track;
     }
 
+
+
+
+    public void displayDeliveryStatus(int deliveryDays, int diffDays){
+        if(diffDays == 1)
+            System.out.println("Preparing");
+        else{
+            if(diffDays > deliveryDays)
+                System.out.println("Shipping");
+            else
+                System.out.println("Delivered");
+        }
+    }
+
     /* Getters */
     
     /**
@@ -325,8 +341,6 @@ public class Parcel {
     public String getDelRegion() {
         return delRegion;
     }
-
-    
 
     /**
      * @return List of items in parcel
@@ -377,6 +391,13 @@ public class Parcel {
         return dateOfTransaction;
     }
 
+    /**
+     * @return the deliveryDays
+     */
+    public int getDeliveryDays() {
+        return deliveryDays;
+    }
+
     /* Setters */
 
     /**
@@ -410,8 +431,15 @@ public class Parcel {
     public void setDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Calendar cal = Calendar.getInstance();
-
+        this.date = cal;
         this.dateOfTransaction = dateFormat.format(cal.getTime());
 
+    }
+
+    /**
+     * @return the date
+     */
+    public Calendar getDate() {
+        return date;
     }
 }
