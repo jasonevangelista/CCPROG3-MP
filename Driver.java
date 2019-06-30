@@ -33,11 +33,10 @@ public class Driver {
 
         while(run){
             
-            System.out.println(driver.formatDate(cal));
-                if(seqNum == 10){ // every 10 transactions == 1 day
-                    cal.add(Calendar.DATE, 1);
-                    seqNum = 0;
-                }
+            if(seqNum == 10){ // every 10 transactions == 1 day
+                cal.add(Calendar.DATE, 1);
+                seqNum = 0;
+            }
 
             actionInt = driver.mainMenu(sc);
 
@@ -48,7 +47,7 @@ public class Driver {
                 choices = new ArrayList<String>();
 
                 seqNum++;
-                    /* INPUT INFO */
+                /* INPUT INFO */
                 name = driver.inputName(sc);
                 region = driver.inputRegion(sc);
 
@@ -90,7 +89,7 @@ public class Driver {
                     parcel.displayDimensions(choices.get(i));
                 }
 
-                parcelType = driver.inputParcelType(sc);
+                parcelType = driver.inputParcelType(sc, choices);
 
                 if(choices.contains(parcelType))
                     parcel.setType(parcelType);
@@ -163,7 +162,7 @@ public class Driver {
                 inputInt = sc.nextInt();
                 switch(inputInt){
                     case 1: 
-                        retStr = "MNL";
+                        retStr = "MML";
                         isInvalid = false;
                         break;
                     case 2:
@@ -190,10 +189,26 @@ public class Driver {
         return retStr;
     }
 
-    public String inputParcelType(Scanner sc){
-        System.out.println();
-        System.out.print("Enter parcel of choice: ");
-        return sc.nextLine();
+    public String inputParcelType(Scanner sc, ArrayList<String> choices){
+        boolean isInvalid = true;
+        String parcelChoice;
+        do {
+            System.out.println();
+            System.out.print("Enter parcel of choice: ");
+            parcelChoice = sc.nextLine();
+
+            for(int i = 0; i < choices.size(); i++){
+                if(parcelChoice.equals(choices.get(i)))
+                    isInvalid = false;
+            }
+            if(isInvalid)
+                System.out.println("Invalid input, try again.");
+
+
+        } while (isInvalid);
+        
+        
+        return parcelChoice;
     }
 
     public boolean inputInsurance(Scanner sc){
