@@ -41,7 +41,8 @@ public class Driver {
 
             actionInt = driver.mainMenu(sc);
 
-            if(actionInt == 1){
+            int actionInt2 = actionInt;
+			if(actionInt2 == 1){
                 listItem = new ArrayList<Item>();
                 types = new ArrayList<int[]>();
                 choices = new ArrayList<String>();
@@ -110,13 +111,13 @@ public class Driver {
                 parcels.add(parcel);
 
             }
-            else if(actionInt == 2){
+            else if(actionInt2 == 2){
                 // track parcel
                 trackingNum = driver.inputTrackingNum(sc);
                 driver.displayTrackingInfo(parcels, trackingNum, cal, driver);
                 
             }
-            else if(actionInt == 3){
+            else if(actionInt2 == 3){
                 if(driver.exitAuthorized(sc, adminPassword))
                     run = false;
             }
@@ -129,59 +130,91 @@ public class Driver {
 
 
     public String inputName(Scanner sc){
+        System.out.println();
         System.out.print("Enter recipient's name: ");
         return sc.nextLine();
     }
 
     public String inputRegion(Scanner sc){
         int inputInt;
-
+        String retStr = new String(); //returned String
+        boolean isInvalid = true;
+        System.out.println();
         System.out.println("Select region of delivery:");
         System.out.println("[1] Metro Manila");
         System.out.println("[2] Provincial Luzon");
         System.out.println("[3] Visayas");
         System.out.println("[4] Mindanao");
-        System.out.print("Input: ");
-
-        inputInt = sc.nextInt();
-        sc.nextLine();
+        //Error catcher for user input
+        do{
+            System.out.print("> ");
+            if (sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                switch(inputInt){
+                    case 1: 
+                        retStr = "MNL";
+                        isInvalid = false;
+                        break;
+                    case 2:
+                        retStr =  "LUZ";
+                        isInvalid = false;
+                        break;
+                    case 3:
+                        retStr =  "VIS";
+                        isInvalid = false;
+                        break;
+                    case 4:
+                        retStr =  "MIN";
+                        isInvalid = false;
+                        break;
+                    default:
+                        System.out.println("Invalid input, try again.");
+                        isInvalid = true;
+                        break;
+                }
+            }
+            sc.nextLine(); 
+        } while(isInvalid);
         
-        if(inputInt == 1)
-            return "MML";
-        else if(inputInt == 2)
-            return "LUZ";
-        else if(inputInt == 3)
-            return "VIS";
-        else if(inputInt == 4)
-            return "MIN";
-        else{
-            System.out.println("error"); // error
-            return "";
-        }
-        
+        return retStr;
     }
 
     public String inputParcelType(Scanner sc){
+        System.out.println();
         System.out.print("Enter parcel of choice: ");
         return sc.nextLine();
     }
 
     public boolean inputInsurance(Scanner sc){
         int inputInt;
-        boolean ins;
+        boolean ins = true, isInvalid = true;
+        System.out.println();
         System.out.println("Do you want to insure the parcel for a small fee?");
         System.out.println("[1] YES");
         System.out.println("[2] NO");
-        inputInt = sc.nextInt();
-        sc.nextLine();
-        if(inputInt == 1)
-            ins = true;
-        else if(inputInt == 2)
-            ins = false;
-        else{
-            ins = false;
-            System.out.println("error"); // error
-        }
+
+        do{
+            System.out.print("> ");
+            if (sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                switch(inputInt){
+                    case 1:
+                        ins = true;
+                        isInvalid = false;
+                        break;
+                    case 2:
+                        ins = false;
+                        isInvalid = false;
+                        break;
+                    default:
+                        System.out.println("Invalid input.");
+                        isInvalid = true;
+                        break;
+                }
+            }
+            sc.nextLine();
+        } while(isInvalid);
+        
         return ins;
     }
 
@@ -279,7 +312,7 @@ public class Driver {
 
     public int mainMenu(Scanner sc){
         int inputInt;
-
+        System.out.println("Johnny Moves - The Moving Company\n================================");
         System.out.println("What do you want to do?");
         System.out.println("[1] Make A Transaction");
         System.out.println("[2] Track Parcel");
