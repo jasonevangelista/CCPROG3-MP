@@ -219,78 +219,135 @@ public class Driver {
     }
 
     public Item inputItemInfo(Scanner sc, int i){
-    
-        int inputInt;
-        int itemLength;
-        int itemWidth;
-        int itemHeight;
-        int itemNumPage;
+        //Sabi ng compiler "might not be initialized" eh so ayan xD
+        int inputInt = 0;
+        int itemLength = 0;
+        int itemWidth = 0;
+ 
+        boolean isInvalid = true;
 
-        double itemWeight;
-    
-        boolean itemShape;
-        
-        String itemType;
-       
+        System.out.println();
         System.out.println("PRODUCT #" + (i + 1) );
     
         // product or document
-        System.out.println("Type of Product:");
-        System.out.println("[1] Document");
-        System.out.println("[2] Product");
-        System.out.print("Input: ");
-        inputInt = sc.nextInt();
-        sc.nextLine();
-    
-        // length
-        System.out.print("Enter Length (inches): ");
-        itemLength = sc.nextInt();
-        sc.nextLine();
-    
-        // width
-        System.out.print("Enter Width (inches): ");
-        itemWidth = sc.nextInt();
-        sc.nextLine();
+        do{
+            System.out.println("\nType of Product:");
+            System.out.println("[1] Document");
+            System.out.println("[2] Product");
+            System.out.print("\n> ");
+            if(sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                if (inputInt == 1 || inputInt == 2){
+                    isInvalid = false;
+                }
+            }
+            sc.nextLine();
+        } while(isInvalid);
+        isInvalid = true;
         
-        //if docu, ask number of pages
-        if(inputInt == 1){
-            itemType = "document";
-            System.out.print("Enter number of Pages: ");
-            itemNumPage = sc.nextInt();
+        // length
+        do {
+            System.out.print("Enter Length (inches): \n> ");
+            if(sc.hasNextDouble())
+                itemLength = (int)Math.ceil(sc.nextDouble());
+            else if(sc.hasNextInt())
+                itemLength = sc.nextInt();
+                
+            isInvalid = (itemLength > 0)? false : true;
             sc.nextLine();
-    
-            Item item = new Item(itemType, itemLength, itemWidth, itemNumPage);
-            return item;
-            // listItem.add(item);
-        }
-    
-        // if product, ask height and weight
-        else if(inputInt == 2){
-            itemType = "product";
-            System.out.print("Enter Height (inches): ");
-            itemHeight = sc.nextInt();
+        } while(isInvalid);
+        
+        System.out.println("\nLength: " + itemLength);      //D E B U G
+        
+        isInvalid = true;
+        
+        // width
+        do{
+            System.out.print("Enter Width (inches): \n> ");
+            if(sc.hasNextDouble())
+                itemWidth = (int)Math.ceil(sc.nextDouble());
+            else if(sc.hasNextInt())
+                itemWidth = sc.nextInt();
+
+            isInvalid = (itemWidth > 0)? false : true;
             sc.nextLine();
-            System.out.print("Enter Weight (kilo): ");
-            itemWeight = sc.nextDouble();
+        } while (isInvalid);
+
+        System.out.println("\nWidth: " + itemWidth);        //D E B U G
+        
+        return (inputInt == 1)? itemIsDocument(sc, itemLength, itemWidth) : itemIsProduct(sc, itemLength, itemWidth);
+        //                      ^^Executes this if user input is one        ^^else execute this
+    }
+
+    public Item itemIsDocument(Scanner sc, int itemLength, int itemWidth){
+        int itemNumPage = 0;
+        boolean isInvalid = true;
+
+        do{
+            System.out.print("\nEnter number of Pages: \n> ");
+            if (sc.hasNextInt()){
+                itemNumPage = sc.nextInt();
+                if (itemNumPage > 0)
+                    isInvalid = false;
+            }
             sc.nextLine();
-            System.out.println("Shape of Product:");
+        } while(isInvalid);
+        
+        Item item = new Item("document", itemLength, itemWidth, itemNumPage);
+        return item;
+        // listItem.add(item);
+    }
+
+    public Item itemIsProduct(Scanner sc, int itemLength, int itemWidth){
+        int inputInt = 0;
+        int itemHeight = 0;
+        double itemWeight = 0;
+        boolean itemShape = true;
+        boolean isInvalid = true;
+
+        do{
+            System.out.print("\nEnter Height (inches): \n> ");
+            if(sc.hasNextDouble())
+                itemHeight = (int)Math.ceil(sc.nextDouble());
+            else if(sc.hasNextInt())
+                itemHeight = sc.nextInt();
+
+            isInvalid = (itemHeight > 0)? false : true;
+            sc.nextLine();
+        } while (isInvalid);
+
+        isInvalid = true;
+
+        do{
+            System.out.print("\nEnter Weight (kilo): \n> ");
+            if(sc.hasNextDouble())
+                itemWeight = sc.nextDouble();
+            else if(sc.hasNextInt())
+                itemWeight = (double)sc.nextInt();
+
+            isInvalid = (itemWidth > 0.0)? false : true;
+            sc.nextLine();
+        } while (isInvalid);
+
+        isInvalid = true;
+
+        do{
+            System.out.println("\nShape of Product:");
             System.out.println("[1] Regular");
             System.out.println("[2] Irregular");
-            System.out.print("Enter input: ");
-            if(sc.nextInt() == 1)
-                itemShape = true;
-            else
-                itemShape = false;
-    
-            Item item = new Item(itemType, itemLength, itemWidth, itemHeight, itemWeight, itemShape);
-            return item;
-            // listItem.add(item);
-        }
-        else{
-            System.out.println("error");
-            return null;
-        }
-    
+            System.out.print("\n> ");
+            if(sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                if (inputInt == 1 || inputInt == 2){
+                    isInvalid = false;
+                }
+            }
+            sc.nextLine();
+        } while(isInvalid);
+        itemShape = (inputInt == 1)? true: false;
+        Item item = new Item("product", itemLength, itemWidth, itemHeight, itemWeight, itemShape);
+        return item;
+        // listItem.add(item);
     }
 
     public String inputTrackingNum(Scanner sc){
@@ -317,6 +374,7 @@ public class Driver {
         System.out.println("[1] Make A Transaction");
         System.out.println("[2] Track Parcel");
         System.out.println("[3] Exit Program");
+        System.out.print("> ");
         inputInt = sc.nextInt();
         sc.nextLine();
 
