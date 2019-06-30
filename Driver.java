@@ -41,7 +41,8 @@ public class Driver {
 
             actionInt = driver.mainMenu(sc);
 
-            if(actionInt == 1){
+            int actionInt2 = actionInt;
+			if(actionInt2 == 1){
                 listItem = new ArrayList<Item>();
                 types = new ArrayList<int[]>();
                 choices = new ArrayList<String>();
@@ -110,13 +111,13 @@ public class Driver {
                 parcels.add(parcel);
 
             }
-            else if(actionInt == 2){
+            else if(actionInt2 == 2){
                 // track parcel
                 trackingNum = driver.inputTrackingNum(sc);
                 driver.displayTrackingInfo(parcels, trackingNum, cal, driver);
                 
             }
-            else if(actionInt == 3){
+            else if(actionInt2 == 3){
                 if(driver.exitAuthorized(sc, adminPassword))
                     run = false;
             }
@@ -134,6 +135,7 @@ public class Driver {
      * @return name
      */
     public String inputName(Scanner sc){
+        System.out.println();
         System.out.print("Enter recipient's name: ");
         return sc.nextLine();
     }
@@ -146,134 +148,217 @@ public class Driver {
      */
     public String inputRegion(Scanner sc){
         int inputInt;
-
-        do {
+        String retStr = new String(); //returned String
+        boolean isInvalid = true;
+        //Error catcher for user input
+        do{
+            System.out.println();
             System.out.println("Select region of delivery:");
             System.out.println("[1] Metro Manila");
             System.out.println("[2] Provincial Luzon");
             System.out.println("[3] Visayas");
             System.out.println("[4] Mindanao");
-            System.out.print("Input: ");
-    
-            inputInt = sc.nextInt();
-            sc.nextLine();
-
-            if(inputInt >= 1 && inputInt <= 4)
-                break;
-            else{
-                System.out.println("!!!Invalid input!!!");
+            System.out.print("> ");
+            if (sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                switch(inputInt){
+                    case 1: 
+                        retStr = "MNL";
+                        isInvalid = false;
+                        break;
+                    case 2:
+                        retStr =  "LUZ";
+                        isInvalid = false;
+                        break;
+                    case 3:
+                        retStr =  "VIS";
+                        isInvalid = false;
+                        break;
+                    case 4:
+                        retStr =  "MIN";
+                        isInvalid = false;
+                        break;
+                    default:
+                        System.out.println("Invalid input, try again.");
+                        isInvalid = true;
+                        break;
+                }
             }
-
-        } while(true);
+            sc.nextLine(); 
+        } while(isInvalid);
         
-        if(inputInt == 1)
-            return "MML";
-        else if(inputInt == 2)
-            return "LUZ";
-        else if(inputInt == 3)
-            return "VIS";
-        else
-            return "MIN";
-        
+        return retStr;
     }
 
     public String inputParcelType(Scanner sc){
+        System.out.println();
         System.out.print("Enter parcel of choice: ");
         return sc.nextLine();
     }
 
     public boolean inputInsurance(Scanner sc){
         int inputInt;
-        boolean ins;
+        boolean ins = true, isInvalid = true;
+        System.out.println();
         System.out.println("Do you want to insure the parcel for a small fee?");
         System.out.println("[1] YES");
         System.out.println("[2] NO");
-        inputInt = sc.nextInt();
-        sc.nextLine();
-        if(inputInt == 1)
-            ins = true;
-        else if(inputInt == 2)
-            ins = false;
-        else{
-            ins = false;
-            System.out.println("error"); // error
-        }
+
+        do{
+            System.out.print("> ");
+            if (sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                switch(inputInt){
+                    case 1:
+                        ins = true;
+                        isInvalid = false;
+                        break;
+                    case 2:
+                        ins = false;
+                        isInvalid = false;
+                        break;
+                    default:
+                        System.out.println("Invalid input.");
+                        isInvalid = true;
+                        break;
+                }
+            }
+            sc.nextLine();
+        } while(isInvalid);
+        
         return ins;
     }
 
     public Item inputItemInfo(Scanner sc, int i){
-    
-        int inputInt;
-        int itemLength;
-        int itemWidth;
-        int itemHeight;
-        int itemNumPage;
+        //Sabi ng compiler "might not be initialized" eh so ayan xD
+        int inputInt = 0;
+        int itemLength = 0;
+        int itemWidth = 0;
+ 
+        boolean isInvalid = true;
 
-        double itemWeight;
-    
-        boolean itemShape;
-        
-        String itemType;
-       
+        System.out.println();
         System.out.println("PRODUCT #" + (i + 1) );
     
         // product or document
-        System.out.println("Type of Product:");
-        System.out.println("[1] Document");
-        System.out.println("[2] Product");
-        System.out.print("Input: ");
-        inputInt = sc.nextInt();
-        sc.nextLine();
-    
-        // length
-        System.out.print("Enter Length (inches): ");
-        itemLength = sc.nextInt();
-        sc.nextLine();
-    
-        // width
-        System.out.print("Enter Width (inches): ");
-        itemWidth = sc.nextInt();
-        sc.nextLine();
+        do{
+            System.out.println("\nType of Product:");
+            System.out.println("[1] Document");
+            System.out.println("[2] Product");
+            System.out.print("\n> ");
+            if(sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                if (inputInt == 1 || inputInt == 2){
+                    isInvalid = false;
+                }
+            }
+            sc.nextLine();
+        } while(isInvalid);
+        isInvalid = true;
         
-        //if docu, ask number of pages
-        if(inputInt == 1){
-            itemType = "document";
-            System.out.print("Enter number of Pages: ");
-            itemNumPage = sc.nextInt();
+        // length
+        do {
+            System.out.print("Enter Length (inches): \n> ");
+            if(sc.hasNextDouble())
+                itemLength = (int)Math.ceil(sc.nextDouble());
+            else if(sc.hasNextInt())
+                itemLength = sc.nextInt();
+                
+            isInvalid = (itemLength > 0)? false : true;
             sc.nextLine();
-    
-            Item item = new Item(itemType, itemLength, itemWidth, itemNumPage);
-            return item;
-            // listItem.add(item);
-        }
-    
-        // if product, ask height and weight
-        else if(inputInt == 2){
-            itemType = "product";
-            System.out.print("Enter Height (inches): ");
-            itemHeight = sc.nextInt();
+        } while(isInvalid);
+        
+        System.out.println("\nLength: " + itemLength);      //D E B U G
+        
+        isInvalid = true;
+        
+        // width
+        do{
+            System.out.print("Enter Width (inches): \n> ");
+            if(sc.hasNextDouble())
+                itemWidth = (int)Math.ceil(sc.nextDouble());
+            else if(sc.hasNextInt())
+                itemWidth = sc.nextInt();
+
+            isInvalid = (itemWidth > 0)? false : true;
             sc.nextLine();
-            System.out.print("Enter Weight (kilo): ");
-            itemWeight = sc.nextDouble();
+        } while (isInvalid);
+
+        System.out.println("\nWidth: " + itemWidth);        //D E B U G
+        
+        return (inputInt == 1)? itemIsDocument(sc, itemLength, itemWidth) : itemIsProduct(sc, itemLength, itemWidth);
+        //                      ^^Executes this if user input is one        ^^else execute this
+    }
+
+    public Item itemIsDocument(Scanner sc, int itemLength, int itemWidth){
+        int itemNumPage = 0;
+        boolean isInvalid = true;
+
+        do{
+            System.out.print("\nEnter number of Pages: \n> ");
+            if (sc.hasNextInt()){
+                itemNumPage = sc.nextInt();
+                if (itemNumPage > 0)
+                    isInvalid = false;
+            }
             sc.nextLine();
-            System.out.println("Shape of Product:");
+        } while(isInvalid);
+        
+        Item item = new Item("document", itemLength, itemWidth, itemNumPage);
+        return item;
+        // listItem.add(item);
+    }
+
+    public Item itemIsProduct(Scanner sc, int itemLength, int itemWidth){
+        int inputInt = 0;
+        int itemHeight = 0;
+        double itemWeight = 0;
+        boolean itemShape = true;
+        boolean isInvalid = true;
+
+        do{
+            System.out.print("\nEnter Height (inches): \n> ");
+            if(sc.hasNextDouble())
+                itemHeight = (int)Math.ceil(sc.nextDouble());
+            else if(sc.hasNextInt())
+                itemHeight = sc.nextInt();
+
+            isInvalid = (itemHeight > 0)? false : true;
+            sc.nextLine();
+        } while (isInvalid);
+
+        isInvalid = true;
+
+        do{
+            System.out.print("\nEnter Weight (kilo): \n> ");
+            if(sc.hasNextDouble())
+                itemWeight = sc.nextDouble();
+            else if(sc.hasNextInt())
+                itemWeight = (double)sc.nextInt();
+
+            isInvalid = (itemWidth > 0.0)? false : true;
+            sc.nextLine();
+        } while (isInvalid);
+
+        isInvalid = true;
+
+        do{
+            System.out.println("\nShape of Product:");
             System.out.println("[1] Regular");
             System.out.println("[2] Irregular");
-            System.out.print("Enter input: ");
-            if(sc.nextInt() == 1)
-                itemShape = true;
-            else
-                itemShape = false;
-    
-            Item item = new Item(itemType, itemLength, itemWidth, itemHeight, itemWeight, itemShape);
-            return item;
-            // listItem.add(item);
-        }
-        else{
-            System.out.println("error");
-            return null;
-        }
-    
+            System.out.print("\n> ");
+            if(sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                if (inputInt == 1 || inputInt == 2){
+                    isInvalid = false;
+                }
+            }
+            sc.nextLine();
+        } while(isInvalid);
+        itemShape = (inputInt == 1)? true: false;
+        Item item = new Item("product", itemLength, itemWidth, itemHeight, itemWeight, itemShape);
+        return item;
+        // listItem.add(item);
     }
 
     public String inputTrackingNum(Scanner sc){
@@ -295,11 +380,12 @@ public class Driver {
 
     public int mainMenu(Scanner sc){
         int inputInt;
-
+        System.out.println("Johnny Moves - The Moving Company\n================================");
         System.out.println("What do you want to do?");
         System.out.println("[1] Make A Transaction");
         System.out.println("[2] Track Parcel");
         System.out.println("[3] Exit Program");
+        System.out.print("> ");
         inputInt = sc.nextInt();
         sc.nextLine();
 
