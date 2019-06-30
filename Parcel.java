@@ -32,7 +32,6 @@ public class Parcel {
     private     String          trackingNumber;
     private     Calendar        calendarDate;
     
-
     /**
      * This constructor takes in the parcel's recipient name, destination region,
      * quantity of items, list of items, sequence number, and insurance status.
@@ -121,7 +120,7 @@ public class Parcel {
         int i, j;
 
         int itemVolume = computeVolume(length, width, height);
-        int[][] rotations = rotations(length, width, height);
+        int[][] rotations = generateRotations(length, width, height);
 
         boolean foundFlat = false;
         boolean foundBox = false;
@@ -167,7 +166,7 @@ public class Parcel {
      * @param height The height of the item
      * @return The 2D-arrays of all possible rotation combinations
      */
-    public int[][] rotations(int length, int width, int height){
+    public int[][] generateRotations(int length, int width, int height){
         int rotations[][] = new int[][]
         {
             {length, width, height},
