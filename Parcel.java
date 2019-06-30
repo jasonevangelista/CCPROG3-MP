@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Calendar;
-// import java.text.DateFormat;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 import java.text.SimpleDateFormat;
 
 /**
@@ -10,29 +7,19 @@ import java.text.SimpleDateFormat;
 public class Parcel {
 
     private     static int      MAX_FLAT_WEIGHT = 3; // in kg 
-    private     static int      FLAT[][] = {{-1, 9, 14, 1},{0, 12, 18, 3}};
-                                // format: flat #, length, width, max thickness
-    private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, {3, 18, 12, 9}, {4, 20, 16, 12}};
-                                // format: box #, length, width, height
-    /*
-        Symbol of index 0 of arrays FLAT[] and BOX[]:
-        -1 -> FLT1
-        0  -> FLT2
-        1  -> BOX1
-        2  -> BOX2
-        3  -> BOX3
-        4  -> BOX4
-    */
+    private     static int      FLAT[][] = {{-1, 9, 14, 1},{0, 12, 18, 3}}; // format: flat #, length, width, max thickness
+    private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, 
+                                           {3, 18, 12, 9}, {4, 20, 16, 12}}; // format: box #, length, width, height
+    // Symbol of index 0 of arrays FLAT[] and BOX[]: 
+    // -1 == FLT1, 0 == FLT2, 1  == BOX1, 2  == BOX2, 3  == BOX3, 4  == BOX4
 
     private     String          recipientName;
     private     String          delRegion;
+    private     String          type;
     private     int             quantity;
     private     ArrayList<Item> listItem;
-    private     String          type;
-    private     int             seqNum;
-
+    
     private     double          baseFee;
-    private     double          totalFee = 0;
     private     double          serviceFee;
     private     double          insuranceFee;
 
@@ -42,8 +29,9 @@ public class Parcel {
     private     boolean         insurance;
 
     private     String          dateOfTransaction;
-    private     Calendar        date;
     private     String          trackingNumber;
+    private     Calendar        calendarDate;
+    
 
     /**
      * This constructor takes in the parcel's recipient name, destination region,
@@ -56,19 +44,20 @@ public class Parcel {
      * @param seqNum - parcel's sequence number
      * @param insurance - true/false whether parcel will apply insurance
      */
-    public Parcel(String name, String region, int numItem, ArrayList<Item> listItem,
-                  int seqNum, boolean insurance){
+    public Parcel(String name, String region, int numItem, ArrayList<Item> listItem, boolean insurance){
         this.recipientName = name;
         this.delRegion = region;
         this.quantity = numItem;
         this.listItem = listItem;
-        this.seqNum = seqNum;
         this.insurance = insurance;
-
         this.trackingNumber = "";
 
+        this.totalWeight = listItem.get(0).getWeight();
+        this.totalVolume = listItem.get(0).getLength() * listItem.get(0).getWidth()
+                           * listItem.get(0).getHeight() / 305;
+
         addRegionDetails();
-        setDate();
+        setCalendarDate();
     }
 
     /**
@@ -253,9 +242,9 @@ public class Parcel {
     /**
      * This method computes the total amount needed for the transaction to be complete.
      * 
-     * @param baseFee - base fee from type of parcel and/or weight
-     * @param serviceFee - delivery fee based on region
-     * @param insuranceFee - additional fee for applying insurance (if applicable)
+     * @param baseFee base fee from type of parcel and/or weight
+     * @param serviceFee delivery fee based on region
+     * @param insuranceFee additional fee for applying insurance (if applicable)
      * @return total fee amount
      */
     public double computeTotalFee(double baseFee, double serviceFee, double insuranceFee){
@@ -278,6 +267,11 @@ public class Parcel {
         System.out.println("TOTAL FEE -     Php" + computeTotalFee(baseFee, serviceFee, insuranceFee));
     }
     
+    /**
+     * This method displays the dimensions of the parcel depending on its type.
+     * 
+     * @param parcelType - type of parcel (FLT1/FLT2/BOX1/BOX2/BOX3/BOX4)
+     */
     public void displayDimensions(String parcelType){
         if(parcelType.equalsIgnoreCase("FLT1"))
             System.out.println(FLAT[0][1] + " x " + FLAT[0][2] + " x " + FLAT[0][3]);
@@ -293,6 +287,33 @@ public class Parcel {
             System.out.println(BOX[3][1] + " x " + BOX[3][2] + " x " + BOX[3][3]);
     }
 
+    /**
+     * This method displays the delivery status of the parcel based on the delivery days
+     * and the current date.
+     * 
+     * @param deliveryDays The number of days it takes the parcel to be delivered
+     * @param diffDays The difference between the date of transaction and the current date
+     */
+    public void displayDeliveryStatus(int deliveryDays, int diffDays){
+        if(diffDays == 1)
+            System.out.println("Preparing");
+        else{
+            if(diffDays > deliveryDays)
+                System.out.println("Shipping");
+            else
+                System.out.println("Delivered");
+        }
+    }
+
+    /**
+     * This method generates the tracking number of the parcel composed of its
+     * type, date of transaction, destination region, number of items, amd sequence number.
+     * 
+     * @param parcel Parcel object
+     * @param seqNum The sequence number of the parcel 
+     * @param date The date of transaction of the parcel
+     * @return The tracking number
+     */
     public String generateTrackingNum(Parcel parcel, int seqNum, String date){
         String track = "";
 
@@ -306,24 +327,7 @@ public class Parcel {
         track += String.format("%02d", parcel.getListItem().size());
         track += String.format("%03d",seqNum);
 
-        // track += date + parcel.getDelRegion() + String.format("%02d", parcel.getListItem().size()) 
-        //       + String.format("%03d",seqNum);
-
         return track;
-    }
-
-
-
-
-    public void displayDeliveryStatus(int deliveryDays, int diffDays){
-        if(diffDays == 1)
-            System.out.println("Preparing");
-        else{
-            if(diffDays > deliveryDays)
-                System.out.println("Shipping");
-            else
-                System.out.println("Delivered");
-        }
     }
 
     /* Getters */
@@ -398,6 +402,13 @@ public class Parcel {
         return deliveryDays;
     }
 
+    /**
+     * @return the date
+     */
+    public Calendar getCalendarDate() {
+        return calendarDate;
+    }
+
     /* Setters */
 
     /**
@@ -428,18 +439,15 @@ public class Parcel {
         this.trackingNumber = trackingNumber;
     }
 
-    public void setDate(){
+    /**
+     * This method sets the calendar date to the format MM/dd/yyyy.
+     */
+    public void setCalendarDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Calendar cal = Calendar.getInstance();
-        this.date = cal;
+        this.calendarDate = cal;
         this.dateOfTransaction = dateFormat.format(cal.getTime());
 
     }
 
-    /**
-     * @return the date
-     */
-    public Calendar getDate() {
-        return date;
-    }
 }
