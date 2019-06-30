@@ -1,5 +1,6 @@
-import java.util.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * The class Parcel represents a parcel object with a recipient's name, destination region,
