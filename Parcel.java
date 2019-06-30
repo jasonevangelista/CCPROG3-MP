@@ -23,8 +23,8 @@ public class Parcel {
     private     double          serviceFee;
     private     double          insuranceFee;
 
-    private     double          totalWeight = 0;
-    private     double          totalVolume = 0;
+    private     double          totalWeight;
+    private     double          totalVolume;
     private     int             deliveryDays;
     private     boolean         insurance;
 
@@ -313,17 +313,26 @@ public class Parcel {
      * @param date The date of transaction of the parcel
      * @return The tracking number
      */
-    public String generateTrackingNum(Parcel parcel, int seqNum, String date){
+    public String generateTrackingNum(int seqNum, String date){
         String track = "";
 
-        if(parcel.getType().equals("FLT1") || parcel.getType().equalsIgnoreCase("FLT2"))
+        // if(parcel.getType().equals("FLT1") || parcel.getType().equalsIgnoreCase("FLT2"))
+        //     track += "FLT";
+        // else
+        //     track += "BOX";
+
+        // track += date;
+        // track += parcel.getDelRegion();
+        // track += String.format("%02d", parcel.getListItem().size());
+        // track += String.format("%03d",seqNum);
+        if(this.type.equals("FLT1") || this.type.equalsIgnoreCase("FLT2"))
             track += "FLT";
         else
             track += "BOX";
 
         track += date;
-        track += parcel.getDelRegion();
-        track += String.format("%02d", parcel.getListItem().size());
+        track += this.delRegion;
+        track += String.format("%02d", this.listItem.size());
         track += String.format("%03d",seqNum);
 
         return track;

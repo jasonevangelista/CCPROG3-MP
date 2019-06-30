@@ -104,7 +104,7 @@ public class Driver {
                 parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
 
                 // generate tracking number
-                parcel.setTrackingNum(parcel.generateTrackingNum(parcel, seqNum, driver.formatDate(cal)));
+                parcel.setTrackingNum(parcel.generateTrackingNum(seqNum, driver.formatDate(cal)));
                 System.out.println("\nTRACKING NUMBER: " + parcel.getTrackingNumber());
 
                 parcels.add(parcel);
