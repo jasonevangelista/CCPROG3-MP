@@ -2,7 +2,13 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 /**
- * Parcel
+ * The class Parcel represents a parcel object with a recipient's name, destination region,
+ * type, quantity of items, list of items, related fees, total weight and volume,
+ * days of delivery, status of insurance, date of transaction, and tracking number.
+ * 
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
  */
 public class Parcel {
 
