@@ -348,6 +348,13 @@ public class Parcel {
     /* Getters */
     
     /**
+     * @return Parcel's recipient's name
+     */
+    public String getRecipientName(){
+        return recipientName;
+    }
+
+    /**
      * @return Parcel Type
      */
     public String getType() {
