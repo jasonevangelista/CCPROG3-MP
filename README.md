@@ -1,22 +1,22 @@
 # CCPROG3-MP
 ## Project Overview
----
 Johnny Moves - A Courier company
 
 Phase 1 includes core methods
 
 Phase 2 includes MVC and GUI integration
 
-## Files Included
 ---
+## Files Included
 * Driver.java
 * Parcel.java
 * Item.java
 * Auto-generated class files
 * README file
 
-## Authors
 ---
+## Authors
+
 Jason Evangelista
 
 John Henry Cagaoan
