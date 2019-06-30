@@ -127,24 +127,44 @@ public class Driver {
         sc.close();
     }
 
-
+    /**
+     * This method asks for the recipient's name.
+     * 
+     * @param sc Scanner object
+     * @return name
+     */
     public String inputName(Scanner sc){
         System.out.print("Enter recipient's name: ");
         return sc.nextLine();
     }
 
+    /**
+     * This method asks for the delivery region of the parcel.
+     * 
+     * @param sc Scanner object
+     * @return region in destination code format
+     */
     public String inputRegion(Scanner sc){
         int inputInt;
 
-        System.out.println("Select region of delivery:");
-        System.out.println("[1] Metro Manila");
-        System.out.println("[2] Provincial Luzon");
-        System.out.println("[3] Visayas");
-        System.out.println("[4] Mindanao");
-        System.out.print("Input: ");
+        do {
+            System.out.println("Select region of delivery:");
+            System.out.println("[1] Metro Manila");
+            System.out.println("[2] Provincial Luzon");
+            System.out.println("[3] Visayas");
+            System.out.println("[4] Mindanao");
+            System.out.print("Input: ");
+    
+            inputInt = sc.nextInt();
+            sc.nextLine();
 
-        inputInt = sc.nextInt();
-        sc.nextLine();
+            if(inputInt >= 1 && inputInt <= 4)
+                break;
+            else{
+                System.out.println("!!!Invalid input!!!");
+            }
+
+        } while(true);
         
         if(inputInt == 1)
             return "MML";
@@ -152,12 +172,8 @@ public class Driver {
             return "LUZ";
         else if(inputInt == 3)
             return "VIS";
-        else if(inputInt == 4)
+        else
             return "MIN";
-        else{
-            System.out.println("error"); // error
-            return "";
-        }
         
     }
 
