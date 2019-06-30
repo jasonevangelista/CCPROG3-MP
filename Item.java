@@ -1,5 +1,10 @@
 /**
- * Item
+ * The class Item represents an item object with a length, width, height, weight,
+ * number of pages, type, and shape.
+ * 
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
  */
 public class Item {
     private     int         length;
@@ -32,10 +37,7 @@ public class Item {
     public Item(String type, int length, int width, int numPage){
         this(type, length, width);
         this.numPage = numPage;
-
-        // compute height/thickness
         this.height = computeThickness(this.numPage);
-        // compute weight
         this.weight = computeWeight(this.numPage);
         this.regularShape = true;
     }

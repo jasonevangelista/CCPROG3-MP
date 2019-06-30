@@ -105,7 +105,7 @@ public class Driver {
                 parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
 
                 // generate tracking number
-                parcel.setTrackingNum(parcel.generateTrackingNum(parcel, seqNum, driver.formatDate(cal)));
+                parcel.setTrackingNum(parcel.generateTrackingNum(seqNum, driver.formatDate(cal)));
                 System.out.println("\nTRACKING NUMBER: " + parcel.getTrackingNumber());
 
                 parcels.add(parcel);
@@ -128,25 +128,36 @@ public class Driver {
         sc.close();
     }
 
-
+    /**
+     * This method asks for the recipient's name.
+     * 
+     * @param sc Scanner object
+     * @return name
+     */
     public String inputName(Scanner sc){
         System.out.println();
         System.out.print("Enter recipient's name: ");
         return sc.nextLine();
     }
 
+    /**
+     * This method asks for the delivery region of the parcel.
+     * 
+     * @param sc Scanner object
+     * @return region in destination code format
+     */
     public String inputRegion(Scanner sc){
         int inputInt;
         String retStr = new String(); //returned String
         boolean isInvalid = true;
-        System.out.println();
-        System.out.println("Select region of delivery:");
-        System.out.println("[1] Metro Manila");
-        System.out.println("[2] Provincial Luzon");
-        System.out.println("[3] Visayas");
-        System.out.println("[4] Mindanao");
         //Error catcher for user input
         do{
+            System.out.println();
+            System.out.println("Select region of delivery:");
+            System.out.println("[1] Metro Manila");
+            System.out.println("[2] Provincial Luzon");
+            System.out.println("[3] Visayas");
+            System.out.println("[4] Mindanao");
             System.out.print("> ");
             if (sc.hasNextInt()){
                 inputInt = sc.nextInt();
