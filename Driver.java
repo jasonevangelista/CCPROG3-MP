@@ -1,10 +1,6 @@
-// import java.util.ArrayList;
-// import java.util.Scanner;
-// import java.util.Calendar;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.text.SimpleDateFormat;
-
 
 /**
  * Driver
@@ -17,20 +13,21 @@ public class Driver {
 
         int seqNum = 000;
         int numItem = 1; // Phase 1 condition (only 1 item per parcel)
+        int actionInt;
+
         String name;
         String region;
         String parcelType;
-        boolean insurance;
         String trackingNum;
+        String adminPassword = "password";
+
+        boolean insurance;
+        boolean run = true;
 
         ArrayList<Item> listItem;
         ArrayList<int[]> types;
         ArrayList<String> choices;
         ArrayList<Parcel> parcels = new ArrayList<Parcel>();
-
-        boolean run = true;
-        int actionInt;
-        int transactions = 0;
 
         Calendar cal = Calendar.getInstance();
 
@@ -63,7 +60,7 @@ public class Driver {
                 insurance = driver.inputInsurance(sc);
                 
                 /* program determines the type of parcels that can be used */
-                Parcel parcel = new Parcel(name, region, numItem, listItem, seqNum, insurance);
+                Parcel parcel = new Parcel(name, region, numItem, listItem, insurance);
 
                 types = parcel.determineValidTypes(listItem.get(0));
 
@@ -120,7 +117,8 @@ public class Driver {
                 
             }
             else if(actionInt == 3){
-                run = false;
+                if(driver.exitAuthorized(sc, adminPassword))
+                    run = false;
             }
             else{
                 System.out.println("ERROR");
@@ -267,6 +265,18 @@ public class Driver {
         return sc.nextLine();
     }
 
+    public boolean exitAuthorized(Scanner sc, String pass){
+        String p;
+        System.out.print("Enter password: ");
+        p = sc.nextLine();
+        if(p.equals(pass))
+            return true;
+        else{
+            System.out.println("Invalid Password!");
+            return false;
+        }
+    }
+
     public int mainMenu(Scanner sc){
         int inputInt;
 
@@ -305,7 +315,7 @@ public class Driver {
                 System.out.print("Current Status: \t");
                 // System.out.println("DIFFERENCE IN DAYS: " + d.getDifferenceDays(parcels.get(i).getDate(), cal) );
                 parcels.get(i).displayDeliveryStatus(parcels.get(i).getDeliveryDays(), 
-                d.getDifferenceDays(cal,parcels.get(i).getDate()) );
+                d.getDifferenceDays(cal,parcels.get(i).getCalendarDate()) );
                 
                 // update date
                 System.out.print("Current Date: \t\t");
@@ -314,6 +324,7 @@ public class Driver {
         }
         System.out.println("=======================================\n");
     }
+    
     public int getDifferenceDays(Calendar startDate, Calendar latestDate){
         long diff = latestDate.getTime().getTime() - startDate.getTime().getTime();
         return (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
