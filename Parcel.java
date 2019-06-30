@@ -70,7 +70,7 @@ public class Parcel {
      * the service fee depending on the region.
      */
     public void addRegionDetails(){
-        if(this.delRegion.equalsIgnoreCase("MML")){
+        if(this.delRegion.equalsIgnoreCase("MNL")){
             this.deliveryDays = 2;
             this.serviceFee = 50;
         }
