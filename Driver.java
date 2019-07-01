@@ -37,7 +37,6 @@ public class Driver {
         Calendar cal = Calendar.getInstance();
 
         while(run){
-            
             if(seqNum == 10){ // every 10 transactions == 1 day
                 cal.add(Calendar.MILLISECOND, 88000000);
                 seqNum = 0;
@@ -101,10 +100,8 @@ public class Driver {
     
                     if(choices.contains(parcelType))
                         parcel.setType(parcelType);
-                    else
-                        System.out.println("error invalid parcel type input!!!");
     
-                    System.out.println("TYPE OF PARCEL: " + parcel.getType());
+                    System.out.println("\n\nTYPE OF PARCEL: " + parcel.getType());
     
                     /* program shows breakdown of the fee and total fee and generates tracking info */
                     parcel.setInsuranceFee(parcel.computeInsuranceFee(parcel.getInsurance()));
@@ -125,11 +122,19 @@ public class Driver {
                 
             }
             else if(actionInt2 == 3){
-                if(driver.exitAuthorized(sc, adminPassword))
+                if(driver.exitAuthorized(sc, adminPassword)){
+                    cal.add(Calendar.DATE, 1);
+                    seqNum = 0;
+                }
+            }
+            else if(actionInt2 == 4){
+                if(driver.exitAuthorized(sc, adminPassword)){
+                    System.out.println("System shutting off...");
                     run = false;
+                }
             }
             else{
-                System.out.println("ERROR");
+                System.out.println("ERROR: Invalid input");
             }
         }
         sc.close();
@@ -209,7 +214,7 @@ public class Driver {
         String parcelChoice;
         do {
             System.out.println();
-            System.out.print("Enter parcel of choice: ");
+            System.out.print("Enter parcel of choice: \n> ");
             parcelChoice = sc.nextLine();
 
             for(int i = 0; i < choices.size(); i++){
@@ -219,10 +224,8 @@ public class Driver {
             if(isInvalid)
                 System.out.println("Invalid input, try again.");
 
-
         } while (isInvalid);
-        
-        
+                
         return parcelChoice;
     }
 
@@ -287,7 +290,7 @@ public class Driver {
             System.out.println("\nType of Item:");
             System.out.println("[1] Document");
             System.out.println("[2] Product");
-            System.out.print("\n> ");
+            System.out.print("> ");
             if(sc.hasNextInt()){
                 inputInt = sc.nextInt();
                 if (inputInt == 1 || inputInt == 2){
@@ -300,7 +303,7 @@ public class Driver {
         
         // length
         do {
-            System.out.print("Enter Length (inches): \n> ");
+            System.out.print("\nEnter Length (inches): \n> ");
             if(sc.hasNextDouble())
                 itemLength = (int)Math.ceil(sc.nextDouble());
             else if(sc.hasNextInt())
@@ -316,7 +319,7 @@ public class Driver {
         
         // width
         do{
-            System.out.print("Enter Width (inches): \n> ");
+            System.out.print("\nEnter Width (inches): \n> ");
             if(sc.hasNextDouble())
                 itemWidth = (int)Math.ceil(sc.nextDouble());
             else if(sc.hasNextInt())
@@ -404,7 +407,7 @@ public class Driver {
             System.out.println("\nShape of Product:");
             System.out.println("[1] Regular");
             System.out.println("[2] Irregular");
-            System.out.print("\n> ");
+            System.out.print("> ");
             if(sc.hasNextInt()){
                 inputInt = sc.nextInt();
                 if (inputInt == 1 || inputInt == 2){
@@ -434,7 +437,7 @@ public class Driver {
         System.out.println("Enter Tracking Number: ");
         trackingNum = sc.nextLine();
 
-        System.out.println("\n=======================================");
+        System.out.println("\n\n=======================================");
         System.out.println("TRACKING INFO:\n");
         for(int i = 0; i < parcels.size(); i++){
             if(parcels.get(i).getTrackingNumber().equals(trackingNum)){
@@ -473,7 +476,6 @@ public class Driver {
         System.out.print("Enter password: ");
         p = sc.nextLine();
         if(p.equals(pass)){
-            System.out.println("System shutting off...");
             return true;
         }
             
@@ -491,15 +493,24 @@ public class Driver {
      * @return the option selected by the user
      */
     public int mainMenu(Scanner sc){
-        int inputInt;
-        System.out.println("Johnny Moves - The Moving Company\n================================");
-        System.out.println("What do you want to do?");
-        System.out.println("[1] Make A Transaction");
-        System.out.println("[2] Track Parcel");
-        System.out.println("[3] Exit Program");
-        System.out.print("> ");
-        inputInt = sc.nextInt();
-        sc.nextLine();
+        int inputInt = 0;
+        boolean isInvalid = true;
+        do{
+            System.out.println("\n\n\n\n\n\n\n");
+            System.out.println("Johnny Moves - The Moving Company\n================================");
+            System.out.println("What do you want to do?");
+            System.out.println("[1] Make A Transaction");
+            System.out.println("[2] Track Parcel");
+            System.out.println("[3] Next Day");
+            System.out.println("[4] Exit Program");
+            System.out.print("> ");
+            if (sc.hasNextInt()){
+                inputInt = sc.nextInt();
+                if (inputInt >=1 && inputInt <= 4)
+                    isInvalid = false;
+            }
+            sc.nextLine();
+        } while(isInvalid);
 
         return inputInt;
     }
