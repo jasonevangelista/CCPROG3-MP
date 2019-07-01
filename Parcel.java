@@ -48,7 +48,6 @@ public class Parcel {
      * @param region - parcel's destination region
      * @param numItem - number of items in parcel
      * @param listItem - list of Item objects
-     * @param seqNum - parcel's sequence number
      * @param insurance - true/false whether parcel will apply insurance
      */
     public Parcel(String name, String region, int numItem, ArrayList<Item> listItem, boolean insurance){
@@ -320,7 +319,6 @@ public class Parcel {
      * This method generates the tracking number of the parcel composed of its
      * type, date of transaction, destination region, number of items, amd sequence number.
      * 
-     * @param parcel Parcel object
      * @param seqNum The sequence number of the parcel 
      * @param date The date of transaction of the parcel
      * @return The tracking number
@@ -343,6 +341,8 @@ public class Parcel {
     /* Getters */
     
     /**
+     * This method gets the recipient's name of the parcel.
+     * 
      * @return Parcel's recipient's name
      */
     public String getRecipientName(){
@@ -350,6 +350,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the parcel type (FLT1/FLT2/BOX1/BOX2/BOX3/BOX4).
+     * 
      * @return Parcel Type
      */
     public String getType() {
@@ -357,6 +359,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the destination region of the parcel.
+     * 
      * @return the delRegion
      */
     public String getDelRegion() {
@@ -364,6 +368,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the list of items in the parcel.
+     * 
      * @return List of items in parcel
      */
     public ArrayList<Item> getListItem() {
@@ -371,6 +377,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the status of insurance on the parcel.
+     * 
      * @return the status whether insurance will be applied or not
      */
     public boolean getInsurance(){
@@ -378,6 +386,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the base fee of the parcel.
+     * 
      * @return Base Fee
      */
     public double getBaseFee() {
@@ -385,6 +395,8 @@ public class Parcel {
     }
     
     /**
+     * This method gets the service fee of the parcel.
+     * 
      * @return Service Fee
      */
     public double getServiceFee() {
@@ -392,6 +404,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the insurance fee of the parcel.
+     * 
      * @return Insurance Fee
      */
     public double getInsuranceFee() {
@@ -399,6 +413,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the tracking number of the parcel.
+     * 
      * @return the trackingNumber
      */
     public String getTrackingNumber() {
@@ -406,6 +422,8 @@ public class Parcel {
     }
 
     /**
+     * This method gets the date of transaction of the parcel in String format.
+     * 
      * @return the dateOfTransaction
      */
     public String getDateOfTransaction() {
@@ -413,22 +431,29 @@ public class Parcel {
     }
 
     /**
-     * @return the deliveryDays
-     */
-    public int getDeliveryDays() {
-        return deliveryDays;
-    }
-
-    /**
+     * This method gets the date of transaction of the parcel in Calendar object
+     * format.
+     * 
      * @return the date
      */
     public Calendar getCalendarDate() {
         return calendarDate;
     }
 
+    /**
+     * This method gets number of delivery days of the parcel.
+     * 
+     * @return the deliveryDays
+     */
+    public int getDeliveryDays() {
+        return deliveryDays;
+    }
+
     /* Setters */
 
     /**
+     * This method sets the parcel type.
+     * 
      * @param type The parcel type to set
      */
     public void setType(String type) {
@@ -436,6 +461,8 @@ public class Parcel {
     }
 
     /**
+     * This method sets the base fee of the parcel.
+     * 
      * @param baseFee the baseFee to set
      */
     public void setBaseFee(double baseFee) {
@@ -443,6 +470,8 @@ public class Parcel {
     }
 
     /**
+     * This method sets the insurance fee of the parcel.
+     * 
      * @param insuranceFee the insuranceFee to set
      */
     public void setInsuranceFee(double insuranceFee) {
@@ -450,6 +479,8 @@ public class Parcel {
     }
 
     /**
+     * This method sets the tracking number of the parcel.
+     * 
      * @param trackingNumber the tracking number to set
      */
     public void setTrackingNum(String trackingNumber){
@@ -464,7 +495,5 @@ public class Parcel {
         Calendar cal = Calendar.getInstance();
         this.calendarDate = cal;
         this.dateOfTransaction = dateFormat.format(cal.getTime());
-
     }
-
 }

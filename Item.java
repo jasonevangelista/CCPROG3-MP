@@ -49,6 +49,7 @@ public class Item {
     *   @param width The width of the product.
     *   @param height The height of the product.
     *   @param weight The weight of the product.
+    *   @param regularShape Whether the product is regularly or irregularly shaped.
     */
     public Item(String type, int length, int width, int height, double weight, boolean regularShape){
         this(type, length, width);
@@ -102,6 +103,8 @@ public class Item {
     }
 
      /**
+     * This method gets the length of the item (in inches).
+     *  
      * @return the length
      */
     public int getLength() {
@@ -109,6 +112,8 @@ public class Item {
     }
 
     /**
+     * This method gets the width of the item (in inches).
+     *  
      * @return the width
      */
     public int getWidth() {
@@ -116,6 +121,8 @@ public class Item {
     }
 
     /**
+     * This method gets the height of the item (in inches).
+     *  
      * @return the height
      */
     public int getHeight() {
@@ -123,6 +130,8 @@ public class Item {
     }
 
     /**
+     * This method gets the length of the item (in kilo).
+     *  
      * @return the weight
      */
     public int getWeight() {
@@ -130,6 +139,8 @@ public class Item {
     }
 
     /**
+     * This method gets the type of the item (Document/Product).
+     *  
     *   @return item type (Document / product)
     */
     public String getItemType(){
@@ -137,6 +148,8 @@ public class Item {
     }
 
     /**
+     * This method gets the shape of the item (Regular/Irregular).
+     *  
      * @return shape of item (regular - true / irregular - false)
      */
     public boolean getShape(){
