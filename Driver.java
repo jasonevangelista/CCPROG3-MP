@@ -385,8 +385,11 @@ public class Driver {
         String p;
         System.out.print("Enter password: ");
         p = sc.nextLine();
-        if(p.equals(pass))
+        if(p.equals(pass)){
+            System.out.println("System shutting off...");
             return true;
+        }
+            
         else{
             System.out.println("Invalid Password!");
             return false;
