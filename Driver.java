@@ -252,11 +252,11 @@ public class Driver {
         boolean isInvalid = true;
 
         System.out.println();
-        System.out.println("PRODUCT #" + (i + 1) );
+        System.out.println("ITEM #" + (i + 1) );
     
         // product or document
         do{
-            System.out.println("\nType of Product:");
+            System.out.println("\nType of Item:");
             System.out.println("[1] Document");
             System.out.println("[2] Product");
             System.out.print("\n> ");
