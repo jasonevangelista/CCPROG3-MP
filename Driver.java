@@ -18,7 +18,6 @@ public class Driver {
         String name;
         String region;
         String parcelType;
-        String trackingNum;
         String adminPassword = "password";
 
         boolean insurance;
@@ -64,8 +63,8 @@ public class Driver {
 
                 types = parcel.determineValidTypes(listItem.get(0));
 
-                for(int i = 0; i < types.size(); i++)
-                    System.out.println(types.get(i)[0]);
+                // for(int i = 0; i < types.size(); i++)
+                //     System.out.println(types.get(i)[0]);
                 
                 /* user chooses the type of parcel he wants */
                 System.out.println("Valid Parcels to use:");
@@ -282,7 +281,7 @@ public class Driver {
             sc.nextLine();
         } while(isInvalid);
         
-        System.out.println("\nLength: " + itemLength);      //D E B U G
+        // System.out.println("\nLength: " + itemLength);      //D E B U G
         
         isInvalid = true;
         
@@ -298,7 +297,7 @@ public class Driver {
             sc.nextLine();
         } while (isInvalid);
 
-        System.out.println("\nWidth: " + itemWidth);        //D E B U G
+        // System.out.println("\nWidth: " + itemWidth);        //D E B U G
         
         return (inputInt == 1)? itemIsDocument(sc, itemLength, itemWidth) : itemIsProduct(sc, itemLength, itemWidth);
         //                      ^^Executes this if user input is one        ^^else execute this
