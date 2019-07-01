@@ -431,7 +431,11 @@ public class Parcel {
         return dateOfTransaction;
     }
 
-
+    /**
+     * This method gets the date of transaction in Date object format.
+     * 
+     * @return date
+     */
     public Date getDate(){
         return this.date;
 
