@@ -3,7 +3,11 @@ import java.util.concurrent.TimeUnit;
 import java.text.SimpleDateFormat;
 
 /**
- * Driver
+ * Driver Class
+ * 
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
  */
 public class Driver {
 
@@ -62,9 +66,6 @@ public class Driver {
                 Parcel parcel = new Parcel(name, region, numItem, listItem, insurance);
 
                 types = parcel.determineValidTypes(listItem.get(0));
-
-                // for(int i = 0; i < types.size(); i++)
-                //     System.out.println(types.get(i)[0]);
                 
                 /* user chooses the type of parcel he wants */
                 System.out.println("Valid Parcels to use:");
@@ -103,7 +104,7 @@ public class Driver {
                 parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
 
                 // generate tracking number
-                parcel.setTrackingNum(parcel.generateTrackingNum(seqNum, driver.formatDate(cal)));
+                parcel.setTrackingNum(parcel.generateTrackingNum(seqNum, driver.formatDateMMDD(cal)));
                 System.out.println("\nTRACKING NUMBER: " + parcel.getTrackingNumber());
 
                 parcels.add(parcel);
@@ -187,6 +188,13 @@ public class Driver {
         return retStr;
     }
 
+    /**
+     * This method asks for the parcel type based on the choices provided.
+     * 
+     * @param sc Scanner object
+     * @param choices Array List of strings composed of valid parcel types
+     * @return parcel type input
+     */
     public String inputParcelType(Scanner sc, ArrayList<String> choices){
         boolean isInvalid = true;
         String parcelChoice;
@@ -209,6 +217,12 @@ public class Driver {
         return parcelChoice;
     }
 
+    /**
+     * This method asks for the status to apply insurance on the parcel or not.
+     * 
+     * @param sc Scanner object
+     * @return whether or not insurance is applied
+     */
     public boolean inputInsurance(Scanner sc){
         int inputInt;
         boolean ins = true, isInvalid = true;
@@ -242,8 +256,14 @@ public class Driver {
         return ins;
     }
 
+    /**
+     * This method asks for the info of the item.
+     * 
+     * @param sc Scanner object
+     * @param i ith item in parcel
+     * @return Item object containing the different information
+     */
     public Item inputItemInfo(Scanner sc, int i){
-        //Sabi ng compiler "might not be initialized" eh so ayan xD
         int inputInt = 0;
         int itemLength = 0;
         int itemWidth = 0;
@@ -303,6 +323,14 @@ public class Driver {
         //                      ^^Executes this if user input is one        ^^else execute this
     }
 
+    /**
+     * This method provides additional input if item is a document.
+     * 
+     * @param sc Scanner object
+     * @param itemLength length of the document
+     * @param itemWidth width of the document
+     * @return Item object
+     */
     public Item itemIsDocument(Scanner sc, int itemLength, int itemWidth){
         int itemNumPage = 0;
         boolean isInvalid = true;
@@ -322,6 +350,14 @@ public class Driver {
         // listItem.add(item);
     }
 
+    /**
+     * This method provides additional input if item is a product.
+     * 
+     * @param sc Scanner object
+     * @param itemLength length of the product
+     * @param itemWidth width of the product
+     * @return Item object
+     */
     public Item itemIsProduct(Scanner sc, int itemLength, int itemWidth){
         int inputInt = 0;
         int itemHeight = 0;
@@ -374,6 +410,15 @@ public class Driver {
         // listItem.add(item);
     }
 
+    /**
+     * This method asks for the tracking number and display the tracking information
+     * of the specified parcel.
+     * 
+     * @param sc Scanner object
+     * @param parcels ArrayList of Parcels containing all transactions
+     * @param cal Calendar object
+     * @param d Driver object
+     */
     public void trackParcel(Scanner sc, ArrayList<Parcel> parcels, Calendar cal, Driver d){
         boolean trackingNumValid = false;
         String trackingNum;
@@ -398,7 +443,7 @@ public class Driver {
                 
                 // update date
                 System.out.print("Current Date: \t\t");
-                System.out.println(d.setDateFormat(cal));
+                System.out.println(d.formatDateMMDDYYYY(cal));
                 trackingNumValid = true;
             }
         }
@@ -407,6 +452,13 @@ public class Driver {
         System.out.println("=======================================\n");
     }
 
+    /**
+     * This method determines if a program will close depending on the password input.
+     * 
+     * @param sc Scanner object
+     * @param pass admin password
+     * @return true - valid password input, false - invalid password input
+     */
     public boolean exitAuthorized(Scanner sc, String pass){
         String p;
         System.out.print("Enter password: ");
@@ -422,6 +474,13 @@ public class Driver {
         }
     }
 
+    /**
+     * This method shows the different starting options of the program and gets
+     * the input for the next action.
+     * 
+     * @param sc Scanner object
+     * @return the option selected by the user
+     */
     public int mainMenu(Scanner sc){
         int inputInt;
         System.out.println("Johnny Moves - The Moving Company\n================================");
@@ -436,7 +495,13 @@ public class Driver {
         return inputInt;
     }
 
-    public String formatDate(Calendar cal){
+    /**
+     * This method formats the date to the month,day format.
+     * 
+     * @param cal Calendar object
+     * @return date in correct format
+     */
+    public String formatDateMMDD(Calendar cal){
         String sPattern = "MMdd";
 
         SimpleDateFormat DateFormat = new SimpleDateFormat(sPattern);
@@ -444,15 +509,29 @@ public class Driver {
 
         return CurrentDate;
     }
+
+    /**
+     * This method formats the date to the month/day/year format.
+     * 
+     * @param cal Calendar object
+     * @return date in correct format
+     */
+    public String formatDateMMDDYYYY(Calendar cal){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        return dateFormat.format(cal.getTime());
+    }
     
+    /**
+     * This method gets the difference of the days from the starting date of
+     * transaction and the current date.
+     * 
+     * @param startDate Calendar object of date of transaction
+     * @param latestDate Calendar object of current date
+     * @return number of days apart
+     */
     public int getDifferenceDays(Calendar startDate, Calendar latestDate){
         long diff = latestDate.getTime().getTime() - startDate.getTime().getTime();
         return (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
-    }
-
-    public String setDateFormat(Calendar cal){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        return dateFormat.format(cal.getTime());
     }
     
 }
