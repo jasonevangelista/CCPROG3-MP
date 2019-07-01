@@ -269,7 +269,7 @@ public class Parcel {
         df.setMinimumFractionDigits(2);
         df.setMaximumFractionDigits(2);
 
-        System.out.println("==BREAKDOWN OF FEES==");
+        System.out.println("\n\n==BREAKDOWN OF FEES==");
         System.out.println("BASE FEE -      Php" + df.format(baseFee));
         System.out.println("SERVICE FEE -   Php" + df.format(serviceFee));
         System.out.println("INSURANCE FEE - Php" + df.format(insuranceFee));

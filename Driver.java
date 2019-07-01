@@ -97,7 +97,7 @@ public class Driver {
                     if(choices.contains(parcelType))
                         parcel.setType(parcelType);
     
-                    System.out.println("TYPE OF PARCEL: " + parcel.getType());
+                    System.out.println("\n\nTYPE OF PARCEL: " + parcel.getType());
     
                     /* program shows breakdown of the fee and total fee and generates tracking info */
                     parcel.setInsuranceFee(parcel.computeInsuranceFee(parcel.getInsurance()));
