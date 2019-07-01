@@ -112,8 +112,7 @@ public class Driver {
             }
             else if(actionInt2 == 2){
                 // track parcel
-                trackingNum = driver.inputTrackingNum(sc);
-                driver.displayTrackingInfo(parcels, trackingNum, cal, driver);
+                driver.trackParcel(sc, parcels, cal, driver);
                 
             }
             else if(actionInt2 == 3){
@@ -376,9 +375,37 @@ public class Driver {
         // listItem.add(item);
     }
 
-    public String inputTrackingNum(Scanner sc){
+    public void trackParcel(Scanner sc, ArrayList<Parcel> parcels, Calendar cal, Driver d){
+        boolean trackingNumValid = false;
+        String trackingNum;
         System.out.println("Enter Tracking Number: ");
-        return sc.nextLine();
+        trackingNum = sc.nextLine();
+
+        System.out.println("\n=======================================");
+        System.out.println("TRACKING INFO:\n");
+        for(int i = 0; i < parcels.size(); i++){
+            if(parcels.get(i).getTrackingNumber().equals(trackingNum)){
+                // start date (date when transaction is made)
+                System.out.print("Date of Transaction: \t");
+                System.out.println(parcels.get(i).getDateOfTransaction());
+                // generated tracking number
+                System.out.print("Tracking Number: \t");
+                System.out.println(parcels.get(i).getTrackingNumber());
+                // current status
+                System.out.print("Current Status: \t");
+                // System.out.println("DIFFERENCE IN DAYS: " + d.getDifferenceDays(parcels.get(i).getDate(), cal) );
+                parcels.get(i).displayDeliveryStatus(parcels.get(i).getDeliveryDays(), 
+                d.getDifferenceDays(cal,parcels.get(i).getCalendarDate()) );
+                
+                // update date
+                System.out.print("Current Date: \t\t");
+                System.out.println(d.setDateFormat(cal));
+                trackingNumValid = true;
+            }
+        }
+        if(!trackingNumValid)
+            System.out.println("Invalid Tracking Number!\n");
+        System.out.println("=======================================\n");
     }
 
     public boolean exitAuthorized(Scanner sc, String pass){
@@ -417,37 +444,6 @@ public class Driver {
         String CurrentDate = DateFormat.format(cal.getTime());
 
         return CurrentDate;
-    }
-
-    public void displayTrackingInfo(ArrayList<Parcel> parcels, String trackingNum, Calendar cal, Driver d){
-        boolean trackingNumValid = false;
-        System.out.println("\n=======================================");
-        System.out.println("TRACKING INFO:\n");
-        for(int i = 0; i < parcels.size(); i++){
-            if(parcels.get(i).getTrackingNumber().equals(trackingNum)){
-                // start date (date when transaction is made)
-
-                System.out.print("Date of Transaction: \t");
-                System.out.println(parcels.get(i).getDateOfTransaction());
-                // generated tracking number
-                System.out.print("Tracking Number: \t");
-                System.out.println(parcels.get(i).getTrackingNumber());
-                // current status
-                System.out.print("Current Status: \t");
-                // System.out.println("DIFFERENCE IN DAYS: " + d.getDifferenceDays(parcels.get(i).getDate(), cal) );
-                parcels.get(i).displayDeliveryStatus(parcels.get(i).getDeliveryDays(), 
-                d.getDifferenceDays(cal,parcels.get(i).getCalendarDate()) );
-                
-                // update date
-                System.out.print("Current Date: \t\t");
-                System.out.println(d.setDateFormat(cal));
-                trackingNumValid = true;
-            }
-        }
-
-        if(!trackingNumValid)
-            System.out.println("Invalid Tracking Number!\n");
-        System.out.println("=======================================\n");
     }
     
     public int getDifferenceDays(Calendar startDate, Calendar latestDate){
