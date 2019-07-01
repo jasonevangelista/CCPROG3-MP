@@ -1,6 +1,8 @@
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Driver Class
@@ -14,7 +16,7 @@ public class Driver {
     public static void main(String[] args) {
         Driver driver = new Driver();
         Scanner sc = new Scanner(System.in);
-
+        
         int seqNum = 000;
         int numItem = 1; // Phase 1 condition (only 1 item per parcel)
         int actionInt;
@@ -37,12 +39,12 @@ public class Driver {
         while(run){
             
             if(seqNum == 10){ // every 10 transactions == 1 day
-                cal.add(Calendar.DATE, 1);
+                cal.add(Calendar.MILLISECOND, 88000000);
                 seqNum = 0;
             }
 
             actionInt = driver.mainMenu(sc);
-
+            
             int actionInt2 = actionInt;
 			if(actionInt2 == 1){
                 listItem = new ArrayList<Item>();
@@ -65,6 +67,8 @@ public class Driver {
                 /* program determines the type of parcels that can be used */
                 Parcel parcel = new Parcel(name, region, numItem, listItem, insurance);
 
+                parcel.setCalendarDate(cal);
+                
                 types = parcel.determineValidTypes(listItem.get(0));
                 
                 for (int i = 0; i < types.size(); i++) {
@@ -444,7 +448,7 @@ public class Driver {
                 System.out.print("Current Status: \t");
                 // System.out.println("DIFFERENCE IN DAYS: " + d.getDifferenceDays(parcels.get(i).getDate(), cal) );
                 parcels.get(i).displayDeliveryStatus(parcels.get(i).getDeliveryDays(), 
-                d.getDifferenceDays(cal,parcels.get(i).getCalendarDate()) );
+                d.getDifferenceDays(cal,parcels.get(i).getCalendarDate(), parcels.get(i).getDate()) );
                 
                 // update date
                 System.out.print("Current Date: \t\t");
@@ -534,8 +538,8 @@ public class Driver {
      * @param latestDate Calendar object of current date
      * @return number of days apart
      */
-    public int getDifferenceDays(Calendar startDate, Calendar latestDate){
-        long diff = latestDate.getTime().getTime() - startDate.getTime().getTime();
+    public int getDifferenceDays(Calendar latestDate, Calendar startDate, Date date){
+        long diff = latestDate.getTime().getTime() - date.getTime();
         return (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
     }
     

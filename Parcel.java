@@ -2,6 +2,7 @@ import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * The class Parcel represents a parcel object with a recipient's name, destination region,
@@ -38,7 +39,7 @@ public class Parcel {
 
     private     String          dateOfTransaction;
     private     String          trackingNumber;
-    private     Calendar        calendarDate;
+    private     Date            date;
     
     /**
      * This constructor takes in the parcel's recipient name, destination region,
@@ -63,7 +64,7 @@ public class Parcel {
                            * listItem.get(0).getHeight() / 305;
 
         addRegionDetails();
-        setCalendarDate();
+        
     }
 
     /**
@@ -305,10 +306,11 @@ public class Parcel {
      * @param diffDays The difference between the date of transaction and the current date
      */
     public void displayDeliveryStatus(int deliveryDays, int diffDays){
+        System.out.println(diffDays);
         if(diffDays == 1)
             System.out.println("Preparing");
         else{
-            if(diffDays > deliveryDays)
+            if(diffDays < deliveryDays)
                 System.out.println("Shipping");
             else
                 System.out.println("Delivered");
@@ -430,14 +432,10 @@ public class Parcel {
         return dateOfTransaction;
     }
 
-    /**
-     * This method gets the date of transaction of the parcel in Calendar object
-     * format.
-     * 
-     * @return the date
-     */
-    public Calendar getCalendarDate() {
-        return calendarDate;
+    
+    public Date getDate(){
+        return this.date;
+
     }
 
     /**
@@ -490,10 +488,9 @@ public class Parcel {
     /**
      * This method sets the calendar date to the format MM/dd/yyyy.
      */
-    public void setCalendarDate(){
+    public void setCalendarDate(Calendar cal){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Calendar cal = Calendar.getInstance();
-        this.calendarDate = cal;
+        this.date = cal.getTime();
         this.dateOfTransaction = dateFormat.format(cal.getTime());
     }
 }
