@@ -420,6 +420,7 @@ public class Driver {
     }
 
     public void displayTrackingInfo(ArrayList<Parcel> parcels, String trackingNum, Calendar cal, Driver d){
+        boolean trackingNumValid = false;
         System.out.println("\n=======================================");
         System.out.println("TRACKING INFO:\n");
         for(int i = 0; i < parcels.size(); i++){
@@ -440,8 +441,12 @@ public class Driver {
                 // update date
                 System.out.print("Current Date: \t\t");
                 System.out.println(d.setDateFormat(cal));
+                trackingNumValid = true;
             }
         }
+
+        if(!trackingNumValid)
+            System.out.println("Invalid Tracking Number!\n");
         System.out.println("=======================================\n");
     }
     
