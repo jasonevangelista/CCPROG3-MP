@@ -85,18 +85,20 @@ public class Item {
     *   @return The weight of the document in grams.
     */
     public int computeWeight(int numPage){
-        int weight = 0;
+        double weight = 0;
         while (numPage > 0){
             if (numPage >= 25){
                 numPage -= 25;
-                weight += 200;
+                weight += 0.200;
             }
             else if (numPage < 25 && numPage >= 0){
                 numPage = 0;
-                weight += 200;
+                weight += 0.200;
             }
         }
-        return weight;
+        weight = Math.ceil(weight);
+
+        return (int)weight;
     }
 
      /**
