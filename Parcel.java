@@ -1,4 +1,5 @@
 import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -265,12 +266,16 @@ public class Parcel {
      * @param insuranceFee - additional fee for applying insurance (if applicable)
      */
     public void displayFeeBreakdown(double baseFee, double serviceFee, double insuranceFee){
+        DecimalFormat df = new DecimalFormat();
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
+
         System.out.println("==BREAKDOWN OF FEES==");
-        System.out.println("BASE FEE -      Php" + baseFee);
-        System.out.println("SERVICE FEE -   Php" + serviceFee);
-        System.out.println("INSURANCE FEE - Php" + insuranceFee);
+        System.out.println("BASE FEE -      Php" + df.format(baseFee));
+        System.out.println("SERVICE FEE -   Php" + df.format(serviceFee));
+        System.out.println("INSURANCE FEE - Php" + df.format(insuranceFee));
         System.out.println("----------------------------");
-        System.out.println("TOTAL FEE -     Php" + computeTotalFee(baseFee, serviceFee, insuranceFee));
+        System.out.println("TOTAL FEE -     Php" + df.format(computeTotalFee(baseFee, serviceFee, insuranceFee)));
     }
     
     /**
