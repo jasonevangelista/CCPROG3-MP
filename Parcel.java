@@ -306,7 +306,6 @@ public class Parcel {
      * @param diffDays The difference between the date of transaction and the current date
      */
     public void displayDeliveryStatus(int deliveryDays, int diffDays){
-        System.out.println(diffDays);
         if(diffDays == 1)
             System.out.println("Preparing");
         else{
@@ -432,7 +431,7 @@ public class Parcel {
         return dateOfTransaction;
     }
 
-    
+
     public Date getDate(){
         return this.date;
 

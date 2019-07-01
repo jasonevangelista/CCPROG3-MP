@@ -123,7 +123,7 @@ public class Driver {
             }
             else if(actionInt2 == 3){
                 if(driver.exitAuthorized(sc, adminPassword)){
-                    cal.add(Calendar.DATE, 1);
+                    cal.add(Calendar.MILLISECOND, 88000000);
                     seqNum = 0;
                 }
             }
@@ -451,7 +451,7 @@ public class Driver {
                 System.out.print("Current Status: \t");
                 // System.out.println("DIFFERENCE IN DAYS: " + d.getDifferenceDays(parcels.get(i).getDate(), cal) );
                 parcels.get(i).displayDeliveryStatus(parcels.get(i).getDeliveryDays(), 
-                d.getDifferenceDays(cal,parcels.get(i).getCalendarDate(), parcels.get(i).getDate()) );
+                d.getDifferenceDays(cal, parcels.get(i).getDate()) );
                 
                 // update date
                 System.out.print("Current Date: \t\t");
@@ -549,7 +549,7 @@ public class Driver {
      * @param latestDate Calendar object of current date
      * @return number of days apart
      */
-    public int getDifferenceDays(Calendar latestDate, Calendar startDate, Date date){
+    public int getDifferenceDays(Calendar latestDate, Date date){
         long diff = latestDate.getTime().getTime() - date.getTime();
         return (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1;
     }
