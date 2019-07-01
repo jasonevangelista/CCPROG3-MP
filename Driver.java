@@ -67,8 +67,6 @@ public class Driver {
 
                 types = parcel.determineValidTypes(listItem.get(0));
                 
-                /* user chooses the type of parcel he wants */
-                System.out.println("Valid Parcels to use:");
                 for (int i = 0; i < types.size(); i++) {
                     if(types.get(i)[0] == -1)
                         choices.add("FLT1");
@@ -84,30 +82,37 @@ public class Driver {
                         choices.add("BOX4");
                 }
 
-                for (int i = 0; i < choices.size(); i++) {
-                    System.out.print("--> "+ choices.get(i) + " - ");
-                    parcel.displayDimensions(choices.get(i));
+                if(choices.size() == 0){
+                    System.out.println("Item too big! Transaction cancelled.");;
                 }
-
-                parcelType = driver.inputParcelType(sc, choices);
-
-                if(choices.contains(parcelType))
-                    parcel.setType(parcelType);
-                else
-                    System.out.println("error invalid parcel type input!!!");
-
-                System.out.println("TYPE OF PARCEL: " + parcel.getType());
-
-                /* program shows breakdown of the fee and total fee and generates tracking info */
-                parcel.setInsuranceFee(parcel.computeInsuranceFee(parcel.getInsurance()));
-                parcel.setBaseFee(parcel.computeBaseFee(parcel.getType(), parcel.getListItem().get(0)));
-                parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
-
-                // generate tracking number
-                parcel.setTrackingNum(parcel.generateTrackingNum(seqNum, driver.formatDateMMDD(cal)));
-                System.out.println("\nTRACKING NUMBER: " + parcel.getTrackingNumber());
-
-                parcels.add(parcel);
+                else{
+                    /* user chooses the type of parcel he wants */
+                    System.out.println("Valid Parcels to use:");
+                    for (int i = 0; i < choices.size(); i++) {
+                        System.out.print("--> "+ choices.get(i) + " - ");
+                        parcel.displayDimensions(choices.get(i));
+                    }
+    
+                    parcelType = driver.inputParcelType(sc, choices);
+    
+                    if(choices.contains(parcelType))
+                        parcel.setType(parcelType);
+                    else
+                        System.out.println("error invalid parcel type input!!!");
+    
+                    System.out.println("TYPE OF PARCEL: " + parcel.getType());
+    
+                    /* program shows breakdown of the fee and total fee and generates tracking info */
+                    parcel.setInsuranceFee(parcel.computeInsuranceFee(parcel.getInsurance()));
+                    parcel.setBaseFee(parcel.computeBaseFee(parcel.getType(), parcel.getListItem().get(0)));
+                    parcel.displayFeeBreakdown(parcel.getBaseFee(), parcel.getServiceFee(), parcel.getInsuranceFee());
+    
+                    // generate tracking number
+                    parcel.setTrackingNum(parcel.generateTrackingNum(seqNum, driver.formatDateMMDD(cal)));
+                    System.out.println("\nTRACKING NUMBER: " + parcel.getTrackingNumber());
+    
+                    parcels.add(parcel);
+                }
 
             }
             else if(actionInt2 == 2){
