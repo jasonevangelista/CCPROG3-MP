@@ -4,6 +4,9 @@ public class Document extends Item{
     public Document(double length, double width, int numPage){
         super("Document", length, width);
         this.numPage = numPage;
+        double height = (double)computeThickness(numPage);
+        super.setHeight(height);
+        super.setVolume(length * width * height);
     }
 
     /**
