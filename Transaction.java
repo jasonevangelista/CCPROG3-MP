@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -218,10 +219,13 @@ public class Transaction {
     }
 
     /**
-     * @param calendarDate the calendarDate to set
+     * This method sets the calendar date to the format MM/dd/yyyy.
      */
-    public void setCalendarDate(Calendar calendarDate) {
-        this.calendarDate = calendarDate;
+    public void setCalendarDate(Calendar cal){
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        this.date = cal.getTime();
+        this.dateOfTransaction = dateFormat.format(cal.getTime());
     }
 
 

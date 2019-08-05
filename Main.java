@@ -1,4 +1,4 @@
-package JohnnyMoves;
+// package JohnnyMoves;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
