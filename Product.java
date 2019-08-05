@@ -1,9 +1,10 @@
 public class Product extends Item{
     private     boolean     regularShape;
 
-    public Product(double length, double width, double weight, boolean regularShape){
+    public Product(double length, double width, double height, double weight, boolean regularShape){
         super("Product", length, width);
         this.regularShape = regularShape;
+        super.setHeight(height);
     }
     
     /**

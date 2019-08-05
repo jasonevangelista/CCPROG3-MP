@@ -58,7 +58,7 @@ public class Parcel {
         this.listItem = listItem;
         this.insurance = insurance;
         this.trackingNumber = "";
-
+        
         this.totalWeight = listItem.get(0).getWeight();
         this.totalVolume = listItem.get(0).getLength() * listItem.get(0).getWidth()
                            * listItem.get(0).getHeight() / 305;
@@ -121,14 +121,14 @@ public class Parcel {
     public ArrayList<int[]> determineValidTypes(Item item){
         ArrayList<int[]> finalTypes = new ArrayList<int[]>();
 
-        int length = item.getLength();
-        int width = item.getWidth();
-        int height = item.getHeight();
+        double length = item.getLength();
+        double width = item.getWidth();
+        double height = item.getHeight();
 
         int i, j;
 
-        int itemVolume = computeVolume(length, width, height);
-        int[][] rotations = generateRotations(length, width, height);
+        double itemVolume = computeVolume(length, width, height);
+        double[][] rotations = generateRotations(length, width, height);
 
         boolean foundFlat = false;
         boolean foundBox = false;
@@ -174,8 +174,8 @@ public class Parcel {
      * @param height The height of the item
      * @return The 2D-arrays of all possible rotation combinations
      */
-    public int[][] generateRotations(int length, int width, int height){
-        int rotations[][] = new int[][]
+    public double[][] generateRotations(double length, double width, double height){
+        double rotations[][] = new double[][]
         {
             {length, width, height},
             {length, height, width},
@@ -196,7 +196,7 @@ public class Parcel {
      * @param height The height of the item
      * @return The volume of the item
      */
-    public int computeVolume(int length, int width, int height){
+    public double computeVolume(double length, double width, double height){
         return length * width * height;
     }
 
@@ -208,16 +208,23 @@ public class Parcel {
      * @return the base fee of the parcel
      */
     public double computeBaseFee(String parcelType, Item item){
-        int actualRate = item.getWeight() * 40;
-        int volumetricRate = item.getLength() * item.getWidth() * item.getHeight() / 305 * 30;
+        double actualRate = item.getWeight() * 40;
+        double volumetricRate = item.getLength() * item.getWidth() * item.getHeight() / 305 * 30;
         if(parcelType.equalsIgnoreCase("FLT1"))
             return 30;
         else if(parcelType.equalsIgnoreCase("FLT2"))
             return 50;
         else if(parcelType.equalsIgnoreCase("BOX1") || parcelType.equalsIgnoreCase("BOX2") ||
                 parcelType.equalsIgnoreCase("BOX3") || parcelType.equalsIgnoreCase("BOX4")){
-                if(item.getShape())
-                    return actualRate;
+                if(item instanceof Product)
+                    if(((Product)item).getShape())
+                        return actualRate;
+                    else
+                        if(actualRate > volumetricRate)
+                            return actualRate;
+                        else
+                        return volumetricRate;
+
                 else{
                     if(actualRate > volumetricRate)
                         return actualRate;

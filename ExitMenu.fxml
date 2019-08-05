@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JohnnyMoves.Controller_MainMenu">
+   <children>
+      <Text fx:id="enterPassword" layoutX="252.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Password" />
+      <Button layoutX="275.0" layoutY="232.0" mnemonicParsing="false" text="Enter" />
+      <Button fx:id="btnMenu" layoutX="479.0" layoutY="335.0" mnemonicParsing="false" onAction="#switchToMainMenu" text="Main Menu" />
+      <PasswordField layoutX="217.0" layoutY="187.0" />
+   </children>
+</AnchorPane>

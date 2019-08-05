@@ -357,7 +357,7 @@ public class Driver {
             sc.nextLine();
         } while(isInvalid);
         
-        Item item = new Item("document", itemLength, itemWidth, itemNumPage);
+        Document item = new Document(itemLength, itemWidth, itemNumPage);
         return item;
         // listItem.add(item);
     }
@@ -417,7 +417,7 @@ public class Driver {
             sc.nextLine();
         } while(isInvalid);
         itemShape = (inputInt == 1)? true: false;
-        Item item = new Item("product", itemLength, itemWidth, itemHeight, itemWeight, itemShape);
+        Product item = new Product(itemLength, itemWidth, itemHeight, itemWeight, itemShape);
         return item;
         // listItem.add(item);
     }

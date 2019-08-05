@@ -25,6 +25,10 @@ public abstract class Item {
         this.width = width;
     }
 
+    public void setHeight(double height){
+        this.height = height;
+    }
+
      /**
      * This method gets the length of the item (in inches).
      *  
@@ -69,4 +73,6 @@ public abstract class Item {
     public String getItemType(){
         return type;
     }
+
+   
 }
