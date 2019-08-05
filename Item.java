@@ -11,6 +11,7 @@ public abstract class Item {
     protected     double         width;
     protected     double         weight;
     protected     double         height;
+    protected     double         volume;
     private       String         type;
 
     /**
@@ -72,6 +73,13 @@ public abstract class Item {
     */
     public String getItemType(){
         return type;
+    }
+
+    /**
+     * @return the volume
+     */
+    public double getVolume() {
+        return volume;
     }
 
    
