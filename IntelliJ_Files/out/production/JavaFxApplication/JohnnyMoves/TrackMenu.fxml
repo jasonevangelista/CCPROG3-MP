@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="txtTrackNum" layoutX="297.0" layoutY="308.0" />
+      <Text layoutX="256.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Transaction:" />
+      <Text layoutX="256.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Date:" />
+      <Text layoutX="256.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delivery Region:" />
+      <Text fx:id="txtDateOfTransaction" layoutX="447.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DATE" />
+      <Text fx:id="txtCurrDate" layoutX="447.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DATE" />
+      <Text fx:id="txtDelRegion" layoutX="447.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGION" />
+      <Button fx:id="btnTrackParcel" layoutX="333.0" layoutY="358.0" mnemonicParsing="false" onAction="#trackParcel" text="Track Parcel" />
+      <Button fx:id="btnMainMenu" layoutX="548.0" layoutY="420.0" mnemonicParsing="false" onAction="#switchToMainMenu" text="Return to Main Menu" />
+      <Text layoutX="256.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" />
+      <Text fx:id="txtStatus" layoutX="446.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS" />
+   </children>
+</AnchorPane>
