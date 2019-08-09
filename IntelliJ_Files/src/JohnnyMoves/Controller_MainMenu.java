@@ -120,6 +120,7 @@ public class Controller_MainMenu {
     }
 
     public void displayTime(){
+
         Thread clock = new Thread(){
             public void run(){
                 for(;;){

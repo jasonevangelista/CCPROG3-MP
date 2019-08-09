@@ -27,6 +27,7 @@ public class Main extends Application {
     }
 
     public void simulateTime(){
+        cal.add(Calendar.MONTH, 1);
         Thread clock = new Thread(){
             public void run(){
                 for(;;){
