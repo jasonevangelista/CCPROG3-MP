@@ -5,7 +5,7 @@ import java.io.*;
 
 public class ReadFile {
 
-//    private String trackingNum;
+    private String trackingNum;
     private String month;
     private String day;
     private String year;
@@ -28,6 +28,7 @@ public class ReadFile {
             temp = sc.next();
 
             if(temp.equalsIgnoreCase(trackingNum)){
+                this.trackingNum = temp;
                 month = sc.next();
                 day = sc.next();
                 year = sc.next();
@@ -40,6 +41,10 @@ public class ReadFile {
 
     public void closeFile(){
         sc.close();
+    }
+
+    public String getTrackingNum() {
+        return trackingNum;
     }
 
     public String getMonth() {

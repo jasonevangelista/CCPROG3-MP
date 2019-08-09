@@ -114,6 +114,11 @@ public class Controller_MainMenu {
         controller_transaction.showStage();
     }
 
+    @FXML private void switchToReportDisplay(ActionEvent event){
+        Controller_Report controller_report = new Controller_Report(cal, thisStage);
+        controller_report.showStage();
+    }
+
     public void displayTime(){
         Thread clock = new Thread(){
             public void run(){

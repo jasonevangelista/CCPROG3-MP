@@ -4,13 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnTransaction" layoutX="286.0" layoutY="206.0" mnemonicParsing="false" onAction="#startTransaction" text="Make Transaction" />
-      <Button fx:id="btnTrack" layoutX="303.0" layoutY="264.0" mnemonicParsing="false" onAction="#switchToTracker" text="Track Parcel" />
-      <Button fx:id="btnExit" layoutX="302.0" layoutY="326.0" mnemonicParsing="false" onAction="#switchToExitMenu" text="Exit Program" />
-      <Text fx:id="title" layoutX="306.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Johnny Moves" />
-      <Text fx:id="txtTime" layoutX="393.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="txtDate" layoutX="280.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button fx:id="btnTransaction" layoutX="311.0" layoutY="176.0" mnemonicParsing="false" onAction="#startTransaction" text="Make Transaction" />
+      <Button fx:id="btnTrack" layoutX="328.0" layoutY="234.0" mnemonicParsing="false" onAction="#switchToTracker" text="Track Parcel" />
+      <Button fx:id="btnExit" layoutX="327.0" layoutY="296.0" mnemonicParsing="false" onAction="#switchToExitMenu" text="Exit Program" />
+      <Text fx:id="title" layoutX="331.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Johnny Moves" />
+      <Text fx:id="txtTime" layoutX="418.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="txtDate" layoutX="305.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button fx:id="btnReport" layoutX="57.0" layoutY="424.0" mnemonicParsing="false" onAction="#switchToReportDisplay" text="VIew Report" />
    </children>
 </AnchorPane>

@@ -79,14 +79,15 @@ public class Controller_Track {
         readFile.readFile(trackNum);
         readFile.closeFile();
 
-        setData();
 
-//        Tracker tracker = new Tracker(readFile.)
-
-        determineDateDifference();
-
-
-        setStatus();
+        if(readFile.getTrackingNum() == null){
+            Controller_ErrorMsg errorMsg = new Controller_ErrorMsg("Invalid Tracking Number!");
+            errorMsg.showStage();
+        }
+        else{
+            setData();
+            setStatus();
+        }
 
     }
 
