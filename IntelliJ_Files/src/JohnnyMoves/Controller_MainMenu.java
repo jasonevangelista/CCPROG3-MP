@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public class Controller_MainMenu {
 
-    @FXML private Text title;
+    @FXML private ImageView title;
     @FXML private Text txtDate;
     @FXML private Text txtTime;
     @FXML private Text enterPassword;
