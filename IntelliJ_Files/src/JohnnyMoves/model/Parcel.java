@@ -1,10 +1,7 @@
 package JohnnyMoves.model;
 
-import java.text.SimpleDateFormat;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
 
 /**
  * The class Parcel represents a parcel object with a recipient's name, destination region,
@@ -17,15 +14,6 @@ import java.util.Date;
  */
 public class Parcel {
 
-    // private     static int      MAX_FLAT_WEIGHT = 3; // in kg 
-    // private     static int      FLAT[][] = {{-1, 9, 14, 1},{0, 12, 18, 3}}; // format: flat #, length, width, max thickness
-    // private     static int      BOX[][] = {{1, 12, 10, 5}, {2, 14, 11, 7}, 
-    //                                        {3, 18, 12, 9}, {4, 20, 16, 12}}; // format: box #, length, width, height
-    // // Symbol of index 0 of arrays FLAT[] and BOX[]: 
-    // // -1 == FLT1, 0 == FLT2, 1  == BOX1, 2  == BOX2, 3  == BOX3, 4  == BOX4
-
-    // private     String          recipientName;
-    // private     String          delRegion;
     private     String          type;
     private     int             quantity;
     private     ArrayList<Item> listItem;
@@ -40,9 +28,10 @@ public class Parcel {
     private     double          totalVolume = 0;
 
     /**
-     * This constructor takes in the parcel's recipient name, destination region,
-     * quantity of items, list of items, sequence number, and insurance status.
+     * This constructor takes in the parcel's list of items, type, and insurance status.
+     *
      * @param listItem - list of Item objects
+     * @param type - type
      * @param insurance - true/false whether parcel will apply insurance
      */
     public Parcel(ArrayList<Item> listItem, String type, boolean insurance){
@@ -61,8 +50,11 @@ public class Parcel {
     }
 
      /**
-      * This method determines the number of delivery days of the parcel and
-      * the service fee depending on the region.
+      * This method determines the service fee of the parcel based on the delivery region and sets the delivery days for
+      * the transaction.
+      *
+      * @param customer - Customer object
+      * @param transaction - Transaction object
       */
      public void addRegionDetails(Customer customer, Transaction transaction){
          if(customer.getDelRegion().equalsIgnoreCase("MML")){
@@ -143,14 +135,12 @@ public class Parcel {
                             baseFee += volumetricRate;
                     }
                 }
-
                 return baseFee;
         }
         else{
             System.out.println("invalid parcel type");
             return 0; // error
         }
-            
     }
 
     /**
@@ -177,26 +167,6 @@ public class Parcel {
      */
     public double computeTotalFee(double baseFee, double serviceFee, double insuranceFee){
         return baseFee + serviceFee + insuranceFee;
-    }
-
-    /**
-     * This method displays the breakdown of the total fee.
-     * 
-     * @param baseFee - base fee from type of parcel and/or weight
-     * @param serviceFee - delivery fee based on region
-     * @param insuranceFee - additional fee for applying insurance (if applicable)
-     */
-    public void displayFeeBreakdown(double baseFee, double serviceFee, double insuranceFee){
-        DecimalFormat df = new DecimalFormat();
-        df.setMinimumFractionDigits(2);
-        df.setMaximumFractionDigits(2);
-
-        System.out.println("\n\n==BREAKDOWN OF FEES==");
-        System.out.println("BASE FEE -      Php" + df.format(baseFee));
-        System.out.println("SERVICE FEE -   Php" + df.format(serviceFee));
-        System.out.println("INSURANCE FEE - Php" + df.format(insuranceFee));
-        System.out.println("----------------------------");
-        System.out.println("TOTAL FEE -     Php" + df.format(computeTotalFee(baseFee, serviceFee, insuranceFee)));
     }
 
     /* Getters */

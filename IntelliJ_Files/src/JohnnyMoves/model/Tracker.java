@@ -6,6 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The class Tracker represents a Tracker object with a tracking number, month, day, year, delivery region, and delivery status.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Tracker {
 
     private String trackingNum;
@@ -17,6 +24,15 @@ public class Tracker {
     private String delRegion;
     private String status;
 
+    /**
+     * This constructor takes in the tracking number, month, day, year, and delivery region.
+     *
+     * @param trackingNum
+     * @param month
+     * @param day
+     * @param year
+     * @param delRegion
+     */
     public Tracker(String trackingNum, String month, String day, String year, String delRegion){
         this.trackingNum = trackingNum;
         this.month = month;
@@ -25,6 +41,12 @@ public class Tracker {
         this.delRegion = delRegion;
     }
 
+    /**
+     * This method computes the difference in days of two dates.
+     *
+     * @param currCal - Calendar object
+     * @return difference in days
+     */
     public long determineDateDifference(Calendar currCal){
         SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yyyy");
         String dateTrans = this.month + "/" + this.day + "/" + this.year;
@@ -35,7 +57,6 @@ public class Tracker {
             Date date1 = myFormat.parse(dateTrans);
             Date date2 = myFormat.parse(dateCurr);
             diff = date2.getTime() - date1.getTime();
-//            System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -43,6 +64,11 @@ public class Tracker {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * This method sets the status of the tracker based on the current date.
+     *
+     * @param currCal - Calendar object
+     */
     public void setStatus(Calendar currCal){
         long dateDiff = determineDateDifference(currCal) + 1;
 
@@ -79,14 +105,28 @@ public class Tracker {
         }
     }
 
+    /**
+     * This method gets the tracking number.
+     * @return tracking number
+     */
     public String getTrackingNum() {
         return trackingNum;
     }
 
+    /**
+     * This method gets the tracking status.
+     *
+     * @return status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * This method gets the delivery region.
+     *
+     * @return delivery region
+     */
     public String getDelRegion() {
         return delRegion;
     }

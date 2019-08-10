@@ -1,3 +1,5 @@
+package JohnnyMoves.model;
+
 /**
  * The class Item represents an item object with a length, width, height, weight,
  * number of pages, type, and shape.
@@ -6,7 +8,6 @@
  * @author John Henry Cagaoan
  * @version 1.0
  */
-package JohnnyMoves.model;
 
 public abstract class Item {
     protected     double         length;
@@ -18,6 +19,7 @@ public abstract class Item {
 
     /**
      * This constructor takes in the item's type, length, and width.
+     *
      *   @param type The type of parcel. Either flat or box.
      *   @param length The length of the page of the document.
      *   @param width The width of the page of the document.
@@ -28,12 +30,31 @@ public abstract class Item {
         this.width = width;
     }
 
+    /**
+     * This method sets the height of the item.
+     *
+     * @param height - The height
+     */
     public void setHeight(double height) {
         this.height = height;
     }
 
+    /**
+     * This method sets the volume of the item.
+     *
+     * @param volume - the volume
+     */
     public void setVolume(double volume) {
         this.volume = volume;
+    }
+
+    /**
+     * This method sets the weight of the item.
+     *
+     * @param weight - the weight
+     */
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     /**
@@ -75,17 +96,19 @@ public abstract class Item {
     /**
      * This method gets the type of the item (Document/Product).
      *  
-    *   @return item type (Document / product)
-    */
+     *   @return item type (Document / product)
+     */
     public String getItemType(){
         return type;
     }
 
+    /**
+     * This method gets the volume of the item.
+     *
+     * @return the volume
+     */
     public double getVolume() {
         return volume;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
 }

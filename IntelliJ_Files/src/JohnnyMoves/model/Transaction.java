@@ -8,7 +8,12 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- * Transaction
+ * The Transaction class represents a Transaction object with a transaction date, number of delivery days, tracking number,
+ * Date object, Customer object, and Calendar object.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
  */
 public class Transaction {
 
@@ -25,10 +30,6 @@ public class Transaction {
     private Date date;
     private Customer recipient;
     private Calendar calendarDate;
-
-    public Transaction(){
-
-    }
 
     /**
      * This method generates all possible combinations of the dimensions of an item.
@@ -52,6 +53,12 @@ public class Transaction {
          return rotations;
     }
 
+    /**
+     * This method computes the total volume of the list of items.
+     *
+     * @param listItem - ArrayList of items
+     * @return total volume
+     */
     public int computeTotalVolume(ArrayList<Item> listItem){
         int volume = 0;
         for(int i = 0; i < listItem.size(); i++){
@@ -60,6 +67,12 @@ public class Transaction {
         return volume;
     }
 
+    /**
+     * This method computes the total weight of the list of items.
+     *
+     * @param listItem - ArrayList of items
+     * @return total weight
+     */
     public double computeTotalWeight(ArrayList<Item> listItem){
         int weight = 0;
         for(int i = 0; i < listItem.size(); i++){
@@ -68,6 +81,16 @@ public class Transaction {
         return weight;
     }
 
+
+    /**
+     * This method determines if the list of items will fit the specified dimensions.
+     *
+     * @param listItem - ArrayList of Item objects
+     * @param parcelLength - length
+     * @param parcelWidth - width
+     * @param parcelHeight - height
+     * @return true if fits parcel, false if doesn't fit parcel
+     */
     public boolean fitsInParcel(ArrayList<Item> listItem, int parcelLength, int parcelWidth, int parcelHeight){
         if(listItem.size() == 0){
             return true;
@@ -111,6 +134,12 @@ public class Transaction {
         }
     }
 
+    /**
+     * This method returns the list of parcel types that are valid based on the list of items.
+     *
+     * @param listItem - ArrayList of Item objects
+     * @return ArrayList of Strings of valid parcels
+     */
     public ArrayList<String> determineValidTypes(ArrayList<Item> listItem){
         ArrayList<String> validTypes = new ArrayList<>();
 
@@ -146,31 +175,13 @@ public class Transaction {
         return validTypes;
     }
 
-
-    /**
-     * This method displays the delivery status of the parcel based on the delivery days
-     * and the current date.
-     * 
-     * @param deliveryDays The number of days it takes the parcel to be delivered
-     * @param diffDays The difference between the date of transaction and the current date
-     */
-    public void displayDeliveryStatus(int deliveryDays, int diffDays){
-        if(diffDays == 1)
-            System.out.println("Preparing");
-        else{
-            if(diffDays < deliveryDays)
-                System.out.println("Shipping");
-            else
-                System.out.println("Delivered");
-        }
-    }
-
     /**
      * This method generates the tracking number of the parcel composed of its
      * type, date of transaction, destination region, number of items, amd sequence number.
-     * 
+     *
+     * @param customer the Customer object
      * @param seqNum The sequence number of the parcel 
-     * @param date The date of transaction of the parcel
+     * @param cal the Calendar object
      * @return The tracking number
      */
     public String generateTrackingNum(Customer customer, int seqNum, Calendar cal){
@@ -193,6 +204,8 @@ public class Transaction {
     }
 
     /**
+     * This method gets the tracking number.
+     *
      * @return the trackingNumber
      */
     public String getTrackingNumber() {
@@ -200,6 +213,8 @@ public class Transaction {
     }
 
     /**
+     * This method gets the transaction date.
+     *
      * @return the dateOfTransaction
      */
     public String getDateOfTransaction() {
@@ -207,6 +222,8 @@ public class Transaction {
     }
 
     /**
+     * This method gets the date.
+     *
      * @return the date
      */
     public Date getDate() {
@@ -214,6 +231,8 @@ public class Transaction {
     }
 
     /**
+     * This method gets the delivery days.
+     *
      * @return the deliveryDays
      */
     public int getDeliveryDays() {
@@ -226,6 +245,8 @@ public class Transaction {
 
 
     /**
+     * This method sets the tracking number.
+     *
      * @param trackingNumber the trackingNumber to set
      */
     public void setTrackingNumber(String trackingNumber) {
@@ -234,6 +255,8 @@ public class Transaction {
 
     /**
      * This method sets the calendar date to the format MM/dd/yyyy.
+     *
+     * @param cal - Calendar object
      */
     public void setCalendarDate(Calendar cal){
         
@@ -242,14 +265,29 @@ public class Transaction {
         this.dateOfTransaction = dateFormat.format(cal.getTime());
     }
 
+    /**
+     * This method sets the customer object.
+     *
+     * @param recipient - Customer object
+     */
     public void setRecipient(Customer recipient) {
         this.recipient = recipient;
     }
 
+    /**
+     * This method gets the customer object.
+     *
+     * @return customer object
+     */
     public Customer getRecipient() {
         return recipient;
     }
 
+    /**
+     * This method sets the delivery days.
+     *
+     * @param deliveryDays - number of delivery days
+     */
     public void setDeliveryDays(int deliveryDays) {
         this.deliveryDays = deliveryDays;
     }
