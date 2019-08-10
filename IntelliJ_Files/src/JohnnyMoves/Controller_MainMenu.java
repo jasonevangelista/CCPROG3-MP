@@ -16,6 +16,13 @@ import java.text.SimpleDateFormat;
 
 import java.io.IOException;
 
+/**
+ * The Controller_MainMenu class is a controller for the MainMenu view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_MainMenu {
 
     @FXML private Text title;
@@ -24,14 +31,18 @@ public class Controller_MainMenu {
     @FXML private Text enterPassword;
 
     private final Stage thisStage;
-
     private int seqNum;
-
     private Calendar cal;
-
     private String prevMonth, prevDay, prevYear;
 
 
+    /**
+     * This constructor takes in a Stage object, Calendar object, and sequence number for the day.
+     *
+     * @param stage - Stage object
+     * @param cal - Calendar object
+     * @param seqNum - daily sequence number
+     */
     public Controller_MainMenu(Stage stage, Calendar cal, int seqNum){
         thisStage = stage;
         this.cal = cal;
@@ -55,6 +66,17 @@ public class Controller_MainMenu {
         }
     }
 
+    /**
+     * This constructor takes in a Stage object, Calendar object,sequence number for the day, and day, month, and year of
+     * previous transaction.
+     *
+     * @param stage - Stage object
+     * @param cal - Calendar object
+     * @param seqNum - daily sequence number
+     * @param prevMonth - month of last transaction
+     * @param prevDay - day of last transaction
+     * @param prevYear - year of last transaction
+     */
     public Controller_MainMenu(Stage stage, Calendar cal, int seqNum, String prevMonth, String prevDay, String prevYear){
         thisStage = stage;
         this.cal = cal;
@@ -75,7 +97,6 @@ public class Controller_MainMenu {
             System.out.println("seqnum incremented - " + this.seqNum);
         }
 
-
         // Load the FXML file
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
@@ -94,33 +115,58 @@ public class Controller_MainMenu {
         }
     }
 
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         displayTime();
         thisStage.show();
     }
 
+    /**
+     * This fxml method switches the current stage to the exit menu view.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void switchToExitMenu(ActionEvent event){
         Controller_ExitMenu controller_exitMenu = new Controller_ExitMenu(thisStage, cal);
         controller_exitMenu.showStage();
     }
 
+    /**
+     * This fxml method switches the current stage to the tracker view.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void switchToTracker(ActionEvent event){
         Controller_Track controller_track = new Controller_Track(cal, thisStage);
         controller_track.showStage();
     }
 
+    /**
+     * This fxml method switches the current stage to the transaction menu view.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void startTransaction(ActionEvent event){
         Controller_Transaction controller_transaction = new Controller_Transaction(cal, thisStage, seqNum);
         controller_transaction.showStage();
     }
 
+    /**
+     * This fxml method switches the current stage to the report display view.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void switchToReportDisplay(ActionEvent event){
         Controller_Report controller_report = new Controller_Report(cal, thisStage);
         controller_report.showStage();
     }
 
-    public void displayTime(){
-
+    /**
+     * This method constantly displays the current date and time.
+     */
+    private void displayTime(){
         Thread clock = new Thread(){
             public void run(){
                 for(;;){
@@ -136,9 +182,10 @@ public class Controller_MainMenu {
                     if(hour == 0)
                         hour = 12;
                     txtTime.setText("Time: " + String.format("%02d", hour) + ":" + minute + ":" + second);
+
                         try{
                             sleep(1000);
-                        } catch (InterruptedException ex){
+                        } catch (InterruptedException e){
 
                         }
                 }
@@ -147,6 +194,11 @@ public class Controller_MainMenu {
         clock.start();
     }
 
+    /**
+     * This method determines the difference of days.
+     *
+     * @return date difference
+     */
     private long determineDateDifference(){
         SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yyyy");
         String datePrev = prevMonth + "/" + prevDay + "/" + prevYear;

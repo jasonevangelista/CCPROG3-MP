@@ -15,6 +15,13 @@ import java.util.Calendar;
 
 import JohnnyMoves.model.*;
 
+/**
+ * The Controller_Transaction class is a controller for the InputMenu view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_Transaction {
 
     private Stage thisStage;
@@ -39,14 +46,17 @@ public class Controller_Transaction {
     private ArrayList<String> parcelTypes;
 
     private Transaction transaction;
-
     private Calendar cal;
-
     private int seqNum;
-
     private String display = "";
 
-
+    /**
+     * This constructor takes in a Calendar object, Stage object, and sequence number.
+     *
+     * @param cal - Calendar Object
+     * @param stage - Stage object
+     * @param seqNum - daily sequence number
+     */
     public Controller_Transaction(Calendar cal, Stage stage, int seqNum){
         thisStage = stage;
         this.cal = cal;
@@ -55,7 +65,7 @@ public class Controller_Transaction {
         docuListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         prodListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-         transaction = new Transaction();
+        transaction = new Transaction();
 
         // Load the FXML file
         try {
@@ -75,13 +85,19 @@ public class Controller_Transaction {
         }
     }
 
-    // show current stage
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         displayTime();
         thisStage.show();
     }
 
-    // adds document object to docu list view and item list
+    /**
+     * This method adds a document object to docu list view and item list
+     *
+     * @param document - Document object
+     */
     public void addDocuToListView(Document document){
         display = document.getLength() + "in x " + document.getWidth()+ "in\t\t\t" + document.getNumPage();
 
@@ -90,17 +106,25 @@ public class Controller_Transaction {
         docuListView.getItems().add(display);
     }
 
-    // adds product object to prod list and item list
-    public void addProdToListView(Item item){
-        display = item.getLength() + "in x " + item.getWidth()+ "in x " + item.getHeight() + "in\t" + item.getWeight() + "kg";
+    /**
+     * This method adds a product object to prod list and item list
+     *
+     * @param product - Product object
+     */
+    public void addProdToListView(Product product){
+        display = product.getLength() + "in x " + product.getWidth()+ "in x " + product.getHeight() + "in\t" + product.getWeight() + "kg";
 
-        listItem.add(item);
+        listItem.add(product);
 
         prodListView.getItems().add(display);
     }
 
-    // removes docu from docu list view and item list
-    @FXML public void deleteDocu(ActionEvent event){
+    /**
+     * This fxml method removes the selected document from the item list and docu list view.
+     *
+     * @param event - ActionEvent object
+     */
+    @FXML private void deleteDocu(ActionEvent event){
         String selectedItem = docuListView.getSelectionModel().getSelectedItem();
 
         for(int i = 0; i < listItem.size(); i++){
@@ -114,8 +138,12 @@ public class Controller_Transaction {
         }
     }
 
-    // removes product from prod list view and item list
-    @FXML public void deleteProd(ActionEvent event){
+    /**
+     * This fxml method removes the selected product from the item list and prod list view.
+     *
+     * @param event - ActionEvent object
+     */
+    @FXML private void deleteProd(ActionEvent event){
         String selectedItem = prodListView.getSelectionModel().getSelectedItem();
 
         for(int i = 0; i < listItem.size(); i++){
@@ -129,21 +157,33 @@ public class Controller_Transaction {
         }
     }
 
-    // opens document input window
+    /**
+     * This fxml method opens the document input menu.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void addDocument(ActionEvent event){
         Controller_Document controller_Document = new Controller_Document(this);
 
         controller_Document.showStage();
     }
 
-    // opens product input window
+    /**
+     * This fxml method opens the product input menu.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void addProduct(ActionEvent event){
         Controller_Product controller_Product = new Controller_Product(this);
 
         controller_Product.showStage();
     }
 
-
+    /**
+     * This fxml method adds the valid parcel types to the validParcelListView.
+     *
+     * @param event ActionEvent object
+     */
     @FXML private void checkValidTypes(ActionEvent event){
         parcelTypes = new ArrayList<>();
         validParcelListView.getItems().clear();
@@ -172,8 +212,13 @@ public class Controller_Transaction {
             }
         }
 
-        }
+    }
 
+    /**
+     * This fxml method initializes the Parcel, Customer, and Transaction object based on the inputs.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void finishTransaction(ActionEvent event){
         String recipientName;
         String delRegion;
@@ -221,7 +266,10 @@ public class Controller_Transaction {
 
     }
 
-    public void displayTime(){
+    /**
+     * This method constantly displays the current date and time.
+     */
+    private void displayTime(){
         Thread clock = new Thread(){
             public void run(){
                 for(;;){

@@ -15,7 +15,13 @@ import javafx.scene.text.Text;
 
 import JohnnyMoves.model.*;
 
-
+/**
+ * The Controller_FeeDisplay class is a controller for the FeeDisplay view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_FeeDisplay {
 
     private Stage thisStage;
@@ -24,22 +30,26 @@ public class Controller_FeeDisplay {
     @FXML private Text txtService;
     @FXML private Text txtInsurance;
     @FXML private Text txtTotal;
-
     @FXML private TextField txtTrackingNum;
-
-    private Transaction transaction;
-
     @FXML private Text txtDate;
     @FXML private Text txtTime;
 
+    private Transaction transaction;
     private String trackingNum;
-    Calendar cal;
-
+    private Calendar cal;
     private int seqNum;
+    private String prevMonth;
+    private String prevDay;
+    private String prevYear;
 
-    String prevMonth, prevDay, prevYear;
-
-
+    /**
+     * This constructor takes in a Calendar object, Stage object, Transaction object, and a sequence number.
+     *
+     * @param cal - Calendar object
+     * @param stage - Stage object
+     * @param transaction - Transaction object
+     * @param seqNum - Sequence number
+     */
     public Controller_FeeDisplay(Calendar cal, Stage stage, Transaction transaction, int seqNum){
         this.transaction = transaction;
         thisStage = stage;
@@ -70,11 +80,10 @@ public class Controller_FeeDisplay {
 
     }
 
-    // show current stage
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
-
-
-        // place fee values in labels
         displayFees();
         displayTime();
         displayTrackingNum();
@@ -82,7 +91,10 @@ public class Controller_FeeDisplay {
         thisStage.show();
     }
 
-    public void writeDataToFile(){
+    /**
+     * This method writes the tracking information in a text file "trackinfo.txt".
+     */
+    private void writeDataToFile(){
         WriteFile file = new WriteFile();
 
         file.openFile();
@@ -90,7 +102,10 @@ public class Controller_FeeDisplay {
         file.closeFile();
     }
 
-    public void displayFees(){
+    /**
+     * This method displays the different sub fees and total fee.
+     */
+    private void displayFees(){
 
         DecimalFormat df = new DecimalFormat();
         df.setMinimumFractionDigits(2);
@@ -115,19 +130,21 @@ public class Controller_FeeDisplay {
 
     }
 
-    public void displayTrackingNum(){
+    /**
+     * This method displays the tracking number.
+     */
+    private void displayTrackingNum(){
         trackingNum = transaction.generateTrackingNum(transaction.getRecipient(), seqNum, cal);
         txtTrackingNum.setText(trackingNum);
     }
 
-    public void displayTime(){
+    /**
+     * This method constantly displays the current date and time.
+     */
+    private void displayTime(){
         Thread clock = new Thread(){
             public void run(){
                 for(;;){
-
-                    // speed of date per second
-//                    cal.add(Calendar.HOUR, 1);
-
                     int month = cal.get(Calendar.MONTH);
                     int year = cal.get(Calendar.YEAR);
                     int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -148,8 +165,12 @@ public class Controller_FeeDisplay {
         clock.start();
     }
 
-    @FXML
-    private void returnToMainMenu(ActionEvent event){
+    /**
+     * This method opens the MainMenu view.
+     *
+     * @param event - ActionEvent object
+     */
+    @FXML private void returnToMainMenu(ActionEvent event){
 
         // load main menu scene
         Controller_MainMenu controller_mainMenu = new Controller_MainMenu(thisStage, cal, seqNum, prevMonth, prevDay, prevYear);

@@ -8,13 +8,25 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The Controller_ErrorMsg class is a controller for the ErrorMsg view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_ErrorMsg {
 
-    private Stage thisStage;
     @FXML private Text txtErrorMsg;
 
+    private Stage thisStage;
     private String errorMessage;
 
+    /**
+     * This constructor takes in the error message.
+     *
+     * @param message - error message
+     */
     public Controller_ErrorMsg(String message){
         thisStage = new Stage();
         this.errorMessage = message;
@@ -36,15 +48,26 @@ public class Controller_ErrorMsg {
         }
     }
 
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         setErrorMessage(errorMessage);
         thisStage.show();
     }
 
+    /**
+     * This method sets the error message in the window.
+     *
+     * @param message - error message
+     */
     public void setErrorMessage(String message){
         txtErrorMsg.setText(message);
     }
 
+    /**
+     * This fxml method closes the current window.
+     */
     @FXML public void closeWindow(){
         thisStage.close();
     }

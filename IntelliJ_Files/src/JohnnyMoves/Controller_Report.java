@@ -14,6 +14,13 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * The Controller_Report class is a controller for the ReportDisplay view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_Report {
 
     @FXML private Text txtCurrDate;
@@ -24,6 +31,12 @@ public class Controller_Report {
     private Calendar cal;
     private Stage thisStage;
 
+    /**
+     * This constructor takes in a Calendar object and a Stage object.
+     *
+     * @param cal - Calendar object
+     * @param stage - Stage object
+     */
     public Controller_Report(Calendar cal, Stage stage){
         this.cal = cal;
         thisStage = stage;
@@ -44,11 +57,11 @@ public class Controller_Report {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         txtCurrDate.setText("As of: " + cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH));
 
@@ -56,6 +69,9 @@ public class Controller_Report {
         thisStage.show();
     }
 
+    /**
+     * This method reads the whole file and  separates each status of each transaction.
+     */
     private void ReadWholeFile(){
         Scanner sc = null;
         String trackingNum;
@@ -89,16 +105,15 @@ public class Controller_Report {
         }
     }
 
-    @FXML
-    private void switchToMainMenu(ActionEvent event) throws IOException {
+    /**
+     * This method switches the stage to the main menu.
+     *
+     * @param event - ActionEvent object
+     */
+    @FXML private void switchToMainMenu(ActionEvent event){
         // load main menu scene
         Controller_MainMenu controller_mainMenu = new Controller_MainMenu(thisStage, cal, 1);
 
         controller_mainMenu.showStage();
     }
-
-
-
-
-
 }

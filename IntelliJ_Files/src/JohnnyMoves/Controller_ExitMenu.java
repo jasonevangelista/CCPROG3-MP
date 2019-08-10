@@ -10,18 +10,29 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Calendar;
 
-
+/**
+ * The Controller_ExitMenu class is a controller for the ExitMenu view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_ExitMenu {
 
     @FXML private PasswordField pfPassword;
 
     private Stage thisStage;
-
     private Calendar cal;
 
-
+    /**
+     * This controller takes in a Stage object and Calendar object.
+     *
+     * @param stage - Stage object
+     * @param cal
+     */
     public Controller_ExitMenu(Stage stage, Calendar cal){
         thisStage = stage;
+        this.cal = cal;
 
         // Load the FXML file
         try {
@@ -41,23 +52,28 @@ public class Controller_ExitMenu {
         }
     }
 
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         thisStage.show();
     }
 
-    @FXML
-    private void switchToMainMenu(ActionEvent event){
+    /**
+     * This method switches the stage to the main menu.
+     *
+     * @param event - ActionEvent object
+     */
+    @FXML private void switchToMainMenu(ActionEvent event){
         Controller_MainMenu controller_mainMenu = new Controller_MainMenu(thisStage, cal, 1);
         controller_mainMenu.showStage();
     }
 
-    @FXML
-    public void checkPassword(){
+    /**
+     * This method checks the password input.
+     */
+    @FXML private void checkPassword(){
         if(pfPassword.getText().equals("password"))
             thisStage.close();
-    }
-
-    private void closeProgram(){
-
     }
 }

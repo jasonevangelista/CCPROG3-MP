@@ -11,20 +11,27 @@ import java.io.IOException;
 
 import JohnnyMoves.model.*;
 
-
+/**
+ * The Controller_Document class is a controller for the InputDocu view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_Document {
 
     private Stage thisStage;
-
     private Controller_Transaction mainController;
 
-
     @FXML private TextField txtLength;
-
     @FXML private TextField txtWidth;
-
     @FXML private TextField txtNumPage;
 
+    /**
+     * This controller takes in a Controller_Transaction object.
+     *
+     * @param controller - Controller_Transaction object
+     */
     public Controller_Document(Controller_Transaction controller){
         mainController = controller;
         thisStage = new Stage();
@@ -47,12 +54,19 @@ public class Controller_Document {
         }
     }
 
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         thisStage.show();
     }
 
-    @FXML
-    private void createDocu(ActionEvent event){
+    /**
+     * This fxml method initializes a Document object based on the inputs.
+     *
+     * @param event - ActionEvent event
+     */
+    @FXML private void createDocu(ActionEvent event){
         Document docu;
 
             try{
@@ -76,6 +90,11 @@ public class Controller_Document {
 
     }
 
+    /**
+     * This fxml method closes the input window.
+     *
+     * @param event - ActionEvent object
+     */
     @FXML private void exit(ActionEvent event){
         Stage popupWindow = (Stage) txtLength.getScene().getWindow();
         popupWindow.close();

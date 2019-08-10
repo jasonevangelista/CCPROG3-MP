@@ -1,6 +1,5 @@
 package JohnnyMoves;
 
-import JohnnyMoves.model.Tracker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +9,6 @@ import javafx.stage.Stage;
 
 import javafx.scene.text.Text;
 
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,23 +16,31 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The Controller_Track class is a controller for the TrackMenu view.
+ *
+ * @author Jason Evangelista
+ * @author John Henry Cagaoan
+ * @version 1.0
+ */
 public class Controller_Track {
 
-    @FXML
-    private TextField txtTrackNum;
-
+    @FXML private TextField txtTrackNum;
     @FXML private Text txtDateOfTransaction;
     @FXML private Text txtCurrDate;
     @FXML private Text txtDelRegion;
-
     @FXML private Text txtStatus;
 
+    private Calendar cal;
+    private Stage thisStage;
+    private ReadFile readFile;
 
-    Calendar cal;
-    Calendar transactionCal;
-    Stage thisStage;
-    ReadFile readFile;
-
+    /**
+     * This controller takes in a Calendar object and Stage object.
+     *
+     * @param cal - Calendar object
+     * @param stage - Stage object
+     */
     public Controller_Track(Calendar cal, Stage stage){
         thisStage = stage;
         this.cal = cal;
@@ -57,20 +63,31 @@ public class Controller_Track {
         }
     }
 
+    /**
+     * This method shows the stage object.
+     */
     public void showStage() {
         thisStage.show();
     }
 
-    @FXML
-    private void switchToMainMenu(ActionEvent event) throws IOException {
-        // load main menu scene
+    /**
+     * This method switched the current stage to the main menu.
+     *
+     * @param event - ActionEvent object
+     * @throws IOException
+     */
+    @FXML private void switchToMainMenu(ActionEvent event) throws IOException {
         Controller_MainMenu controller_mainMenu = new Controller_MainMenu(thisStage, cal, 1);
 
         controller_mainMenu.showStage();
     }
 
-    @FXML
-    private void trackParcel(ActionEvent event){
+    /**
+     * This method searches the tracking number in the text file to check its status.
+     *
+     * @param event - ActionEvent object
+     */
+    @FXML private void trackParcel(ActionEvent event){
         String trackNum = txtTrackNum.getText();
 
         readFile = new ReadFile();
@@ -91,15 +108,20 @@ public class Controller_Track {
 
     }
 
+    /**
+     * This method sets the calendar dates in the Text displays.
+     */
     private void setData(){
         txtDateOfTransaction.setText(readFile.getMonth() + "/" + readFile.getDay() + "/" + readFile.getYear());
         txtCurrDate.setText(String.format("%02d", cal.get(Calendar.MONTH)) + "/" + String.format("%02d", cal.get(Calendar.DAY_OF_MONTH)) + "/" + String.format("%02d", cal.get(Calendar.YEAR)));
         txtDelRegion.setText(readFile.getDelRegion());
-
-//        transactionCal.set(Integer.parseInt(readFile.getYear()),Integer.parseInt(readFile.getMonth()), Integer.parseInt(readFile.getDay()));
-
     }
 
+    /**
+     * This method computes the difference in days of two dates.
+     *
+     * @return day difference
+     */
     private long determineDateDifference(){
         SimpleDateFormat myFormat = new SimpleDateFormat("MM/dd/yyyy");
         String dateTrans = readFile.getMonth() + "/" + readFile.getDay() + "/" + readFile.getYear();
@@ -118,6 +140,9 @@ public class Controller_Track {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * This method sets the status of the parcel.
+     */
     private void setStatus(){
         long dateDiff = determineDateDifference() + 1;
 
