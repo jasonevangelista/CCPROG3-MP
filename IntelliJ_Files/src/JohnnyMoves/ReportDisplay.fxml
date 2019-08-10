@@ -1,21 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnMainMenu" layoutX="302.0" layoutY="409.0" mnemonicParsing="false" onAction="#switchToMainMenu" text="Return to Main Menu" />
-      <Text fx:id="txtCurrDate" layoutX="347.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CurrDate" />
-      <ListView fx:id="listPreparing" layoutX="61.0" layoutY="150.0" prefHeight="200.0" prefWidth="200.0" />
-      <ListView fx:id="listShipping" layoutX="276.0" layoutY="150.0" prefHeight="200.0" prefWidth="200.0" />
-      <ListView fx:id="listDelivered" layoutX="489.0" layoutY="150.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="131.0" layoutY="124.0" text="Preparing" textAlignment="CENTER" />
-      <Label layoutX="349.0" layoutY="124.0" text="Shipping" textAlignment="CENTER" />
-      <Label layoutX="560.0" layoutY="124.0" text="Delivered" textAlignment="CENTER" />
+      <BorderPane prefHeight="500.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnMainMenu" alignment="CENTER" mnemonicParsing="false" onAction="#switchToMainMenu" text="Back" />
+               </children>
+            </VBox>
+         </bottom>
+         <top>
+            <VBox alignment="CENTER" prefHeight="150.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <VBox alignment="TOP_CENTER" prefHeight="315.0" prefWidth="650.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="txtCurrDate" strokeType="OUTSIDE" strokeWidth="0.0" text="CurrDate" />
+                  <HBox alignment="CENTER" prefHeight="255.0" prefWidth="650.0" spacing="10.0">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="Preparing" textAlignment="CENTER" />
+                              <ListView fx:id="listPreparing" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="Shipping" textAlignment="CENTER" />
+                              <ListView fx:id="listShipping" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="Delivered" textAlignment="CENTER" />
+                              <ListView fx:id="listDelivered" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

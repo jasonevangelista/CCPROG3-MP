@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnTransaction" layoutX="311.0" layoutY="176.0" mnemonicParsing="false" onAction="#startTransaction" text="Make Transaction" />
-      <Button fx:id="btnTrack" layoutX="328.0" layoutY="234.0" mnemonicParsing="false" onAction="#switchToTracker" text="Track Parcel" />
-      <Button fx:id="btnExit" layoutX="327.0" layoutY="296.0" mnemonicParsing="false" onAction="#switchToExitMenu" text="Exit Program" />
-      <Text fx:id="title" layoutX="331.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Johnny Moves" />
-      <Text fx:id="txtTime" layoutX="418.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="txtDate" layoutX="305.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Button fx:id="btnReport" layoutX="57.0" layoutY="424.0" mnemonicParsing="false" onAction="#switchToReportDisplay" text="VIew Report" />
+      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="450.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnTransaction" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startTransaction" prefWidth="125.0" style="-fx-background-radius: 0,0,0,0;" text="Make a Transaction" />
+                  <Button fx:id="btnTrack" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToTracker" prefWidth="125.0" style="-fx-background-radius: 0,0,0,0;" text="Track Parcel" />
+                  <Button fx:id="btnReport" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToReportDisplay" prefWidth="125.0" style="-fx-background-radius: 0,0,0,0;" text="View Report" />
+                  <Button fx:id="btnExit" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToExitMenu" prefWidth="125.0" style="-fx-background-radius: 0,0,0,0;" text="Exit" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Text fx:id="txtDate" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+                  <Text fx:id="txtTime" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" />
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <VBox prefHeight="150.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="title" fitHeight="150.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
    </children>
 </AnchorPane>
